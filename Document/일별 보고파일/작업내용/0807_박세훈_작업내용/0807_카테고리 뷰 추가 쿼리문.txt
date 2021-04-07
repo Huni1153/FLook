@@ -1,0 +1,23 @@
+CREATE OR REPLACE VIEW  recipe_category_view
+AS
+SELECT rc.recipe_code,cc.country_category_name,ic.ingredient_category_name,kc.kind_category_name,sc.situation_category_name,mc.method_category_name
+FROM 
+recipe_category_tb rc,country_category_tb cc,
+ingredient_category_tb ic,
+kind_category_tb kc,
+situation_category_tb sc,
+method_category_tb mc
+WHERE 
+rc.country_category_code=cc.country_category_code AND 
+rc.ingredient_category_code=ic.ingredient_category_code AND 
+rc.kind_category_code=kc.kind_category_code AND 
+rc.situation_category_code=sc.situation_category_code AND
+rc.method_category_code=mc.method_category_code;
+
+
+CREATE OR REPLACE VIEW  ingredient_view
+AS
+SELECT ic.ingredient_code,ic.recipe_code,ic.ingredient_name,ic.ingredient_amount,ic.ingredient_type,iu.ingredient_unit_name
+FROM ingredient_tb ic,ingredient_unit_category_tb iu
+WHERE ic.ingredient_unit_code=iu.ingredient_unit_code;
+

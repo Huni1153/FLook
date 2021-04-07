@@ -1,0 +1,102 @@
+create table user_tb (
+user_code varchar2(100) not null constraints user_tb_user_code_pk primary key, 
+user_image varchar2(2000) not null,
+user_name varchar2(20) not null, 
+user_email varchar2(320) not null, 
+user_password varchar2(60) not null, 
+user_gender varchar2(20) not null, 
+user_birthday date not null);
+
+
+CREATE TABLE recipe_tb(
+recipe_code VARCHAR2(100) NOT NULL CONSTRAINT recipe_tb_recipe_code_pk PRIMARY KEY,
+recipe_name varchar2(100) not null,
+complete_image VARCHAR2(2000) NOT NULL,
+recipe_description VARCHAR2(2000) NULL,
+person_number NUMBER NOT NULL,
+cooking_time VARCHAR2(100) NOT NULL,
+cooking_level VARCHAR2(100) NOT NULL
+);
+
+
+create table post_tb (post_code varchar2(100) not null constraints post_tb_post_code_pk primary key, recipe_code varchar2(100) not null ,constraints post_tb_recipe_code_fk foreign key (recipe_code) references recipe_tb (recipe_code),user_code varchar2(100) not null,constraints post_tb_user_code_fk foreign key (user_code) references user_tb(user_code),like_count NUMBER not null,post_hits number not null, post_hash_tag varchar2(1000) null);
+
+
+create table follow_tb(
+follow_code varchar2(100) not null constraints follow_tb_follow_code_pk primary key,
+user_code varchar2(100)  constraints follow_tb_user_code_fk REFERENCES user_tb(user_code),
+follow_user_code varchar2(100) not null
+);
+
+
+create table SNS_friend_tb (sns_friend_code varchar2(100) not null constraints SNS_friend_tb_pk primary key,
+user_code varchar2(100)  constraints SNS_friend_tb_user_code_fk REFERENCES user_tb(user_code),
+friend_user_code varchar2(100) constraints SNS_friend_tb_user_code_fk2 REFERENCES user_tb(user_code));
+
+CREATE TABLE ingredient_tb(
+ingredient_code VARCHAR2(100) NOT NULL CONSTRAINTS ingredient_tb_code_pk PRIMARY KEY,
+ingredient_name VARCHAR2(100) NOT NULL,
+ingredient_number NUMBER NULL,
+ingredient_unit VARCHAR2(100) NULL,
+ingredient_type VARCHAR2(100) NOT NULL);
+
+create table cart_tb (cart_code varchar2(100) not null constraints cart_tb_cart_code_pk primary key,user_code varchar2(100) not null constraints cart_tb_user_code_fk references user_tb(user_code),ingredient_code varchar2(100) not null  constraints cart_tb_ingredient_code_fk  references ingredient_tb(ingredient_code));
+
+CREATE TABLE cooking_tb(
+cooking_code VARCHAR2(100) NOT NULL CONSTRAINTS cooking_tb_cooking_code_pk PRIMARY KEY,
+cooking_sequence NUMBER NOT NULL,
+cooking_image VARCHAR2(2000) NOT NULL,
+cooking_caption VARCHAR2(2000)NULL);
+
+create table comment_tb (
+comment_code varchar2(100) constraints comment_tb_comment_code_pk primary key,
+user_code varchar2(1000) constraints comment_tb_user_code_fk references user_tb(user_code),
+comment_contents varchar2(1000) not null,
+comment_date date not null,
+post_code varchar2(100) not null constraints comment_tb_post_code_fk references post_tb(post_code));
+
+
+CREATE TABLE video_recipe_tb(
+video_recipe_code VARCHAR2(100) NOT NULL CONSTRAINT video_recipe_video_code_pk PRIMARY KEY,
+video_name VARCHAR2(100) NULL,
+video_url VARCHAR2(100) NULL,
+recipe_code VARCHAR2(100) NOT NULL CONSTRAINT video_recipe_recipe_code_fk REFERENCES recipe_tb (recipe_code));
+
+create view simple_recipe_view
+as
+select r.recipe_code,p.post_code,r.complete_image,r.recipe_name,r.recipe_description,p.like_count,p.post_hits
+from recipe_tb r
+join post_tb p
+on r.recipe_code=p.recipe_code;
+
+create view flook_recipe_view
+as
+select p.post_code,r.recipe_code,r.complete_image,r.recipe_description,r.person_number,r.cooking_time,r.cooking_level,r.recipe_name,p.like_count,p.post_hits,p.post_hash_tag
+from recipe_tb r
+join post_tb p
+on r.recipe_code=p.recipe_code;
+
+
+create table scrap_tb (
+scrap_code varchar2(100) not null constraints scrap_tb_scrap_code_pk primary key,
+user_code varchar2(100) not null constraints scrap_tb_user_code_fk references user_tb(user_code),
+post_code varchar2(100) not null constraints scrap_tb_post_code_fk references post_tb(post_code));
+
+create view video_recipe_view
+as
+select p.post_code,r.recipe_code,v.video_recipe_code,v.video_name,r.complete_image,r.recipe_name,r.recipe_description,r.person_number,r.cooking_time,r.cooking_level,v.video_url,p.like_count,p.post_hits,p.post_hash_tag
+from post_tb p
+join recipe_tb r
+on p.recipe_code=r.recipe_code
+join video_recipe_tb v
+on r.recipe_code=v.recipe_code;
+
+
+create view simple_video_recipe_view
+as
+select p.post_code,v.video_recipe_code,v.video_name,v.video_url,r.recipe_code,r.complete_image,r.recipe_name,r.recipe_description,p.like_count,p.post_hits
+from video_recipe_tb v
+join recipe_tb r
+on r.recipe_code=v.recipe_code
+join post_tb p
+on p.recipe_code=r.recipe_code;

@@ -1,0 +1,50 @@
+select *
+from simple_recipe_view
+
+select *
+from recipe_tb;
+
+CREATE OR REPLACE VIEW simple_recipe_view
+AS
+select r.recipe_code,p.post_code,r.complete_image,r.recipe_name,r.recipe_description,p.like_count,p.post_hits,cct.country_category_name,ict.ingredient_category_name,kct.kind_category_name,sct.situation_category_name,mct.method_category_name
+FROM recipe_tb r,post_tb p,recipe_category_tb rc,country_category_tb cct,ingredient_category_tb ict,kind_category_tb kct,situation_category_tb sct,method_category_tb mct
+WHERE p.recipe_code=r.recipe_code
+AND r.recipe_code=rc.recipe_code
+AND rc.country_category_code=cct.country_category_code
+AND rc.ingredient_category_code =ict.ingredient_category_code
+AND rc.kind_category_code=kct.kind_category_code
+AND rc.situation_category_code=sct.situation_category_code
+AND rc.method_category_code=mct.method_category_code;
+
+CREATE OR REPLACE VIEW user_recipe_view
+AS
+SELECT p.post_code,r.recipe_code,u.user_code,r.complete_image,r.recipe_name,r.recipe_description,r.person_number,r.cooking_time,r.cooking_level,p.like_count,p.post_hits,p.post_hash_tag,u.user_name,u.user_image
+FROM post_tb p,recipe_tb r,user_tb u
+WHERE p.recipe_code=r.recipe_code AND p.user_code=u.user_code;
+
+
+alter table recipe_category_tb rename column ingredienct_category_code to ingredient_category_code;
+
+select *
+from recipe_category_tb;
+
+select *
+from post_tb;
+
+drop table post_tb;
+
+select *
+from country_category_tb
+
+select *
+from ingredient_category_tb;
+
+select *
+from simple_recipe_view;
+
+INSERT INTO user_tb(user_code,user_name,user_image,user_email,user_password,user_gender,user_birthday,USER_SNS)
+VALUES('USER_002','¹Ú¼¼ÈÆ','http://www.naver.com','zxca1520@naver.com','1153','³²¼º',to_date('1991/01/15','yyyy/mm/dd'),0);
+
+
+insert into post_tb(post_code,recipe_code,user_code,like_count,post_hits,post_hash_tag,post_date)
+values('POST_001','RECIPE_001','USER_001',1234,432524,'#±èÄ¡#½ºÆÔ#¹ä',sysdate);

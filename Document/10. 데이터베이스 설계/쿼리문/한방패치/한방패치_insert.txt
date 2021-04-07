@@ -1,0 +1,165 @@
+INSERT INTO user_tb(user_code,user_name,user_image,user_email,user_password,user_gender,user_birthday,sns)
+VALUES('USER_001','전상우','http://www.naver.com','swj1539@naver.com','1539','남성',to_date('1990/08/04','yyyy/mm/dd'),0);
+
+INSERT INTO recipe_tb
+VALUES('RECIPE_001','img_url','김치볶음밥','레시피 설명',3,'30분','어려움');
+INSERT INTO recipe_tb
+VALUES('RECIPE_002','img_url','김치부침개','레시피 설명',3,'30분','어려움');
+INSERT INTO recipe_tb
+VALUES('RECIPE_003','img_url','총각김치','레시피 설명',3,'30분','어려움');
+INSERT INTO recipe_tb
+VALUES('RECIPE_004','img_url','갈비만두','레시피 설명',3,'30분','어려움');
+INSERT INTO recipe_tb
+VALUES('RECIPE_005','img_url','치즈라면','레시피 설명',3,'30분','어려움');
+INSERT INTO recipe_tb
+VALUES('RECIPE_006','img_url','볶음라면','레시피 설명',3,'30분','어려움');
+INSERT INTO recipe_tb
+VALUES('RECIPE_007','img_url','해물파전','레시피 설명',3,'30분','어려움');
+INSERT INTO recipe_tb
+VALUES('RECIPE_008','img_url','갈비탕','레시피 설명',3,'30분','어려움');
+INSERT INTO recipe_tb
+VALUES('RECIPE_009','img_url','갈비치즈볶음밥','레시피 설명',3,'30분','어려움');
+INSERT INTO recipe_tb
+VALUES('RECIPE_010','img_url','치즈마요네즈덮밥','레시피 설명',3,'30분','어려움');
+
+
+insert into country_category_tb values('cct_001','한식');
+insert into country_category_tb values('cct_002','양식');
+insert into country_category_tb values('cct_003','일식');
+insert into country_category_tb values('cct_004','중식');
+
+
+insert into ingredient_category_tb values('icc_001','육류');
+insert into ingredient_category_tb values('icc_002','해물류');
+insert into ingredient_category_tb values('icc_003','곡류');
+insert into ingredient_category_tb values('icc_004','채소류');
+insert into ingredient_category_tb values('icc_005','콩/견과류');
+
+
+
+insert into kind_category_tb values('kcc_001','밥/죽');
+insert into kind_category_tb values('kcc_002','면/만두');
+insert into kind_category_tb values('kcc_003','국/탕/찌개');
+insert into kind_category_tb values('kcc_004','메인반찬');
+insert into kind_category_tb values('kcc_005','김치/밑반찬');
+
+
+insert into situation_category_tb values('scc_001','일상');
+insert into situation_category_tb values('scc_002','손님접대');
+insert into situation_category_tb values('scc_003','이유식');
+insert into situation_category_tb values('scc_004','나들이');
+insert into situation_category_tb values('scc_005','간식');
+
+
+
+
+insert into method_category_tb values('mcc_001','끓이기');
+insert into method_category_tb values('mcc_002','볶음');
+insert into method_category_tb values('mcc_003','부침');
+insert into method_category_tb values('mcc_004','찜');
+insert into method_category_tb values('mcc_005','튀김');
+
+
+
+insert into method_category_tb values('iuc_001','g');
+insert into method_category_tb values('iuc_002','ml');
+insert into method_category_tb values('iuc_003','숫가락');
+
+insert into recipe_category_tb
+values('RCC001','RECIPE_001','cct_001','icc_001','kcc_001','scc_001','mcc_001');
+insert into recipe_category_tb
+values('RCC002','RECIPE_002','cct_001','icc_002','kcc_002','scc_001','mcc_001');
+
+insert into recipe_category_tb
+values('RCC003','RECIPE_003','cct_001','icc_003','kcc_002','scc_004','mcc_002');
+
+insert into recipe_category_tb
+values('RCC004','RECIPE_004','cct_004','icc_003','kcc_001','scc_001','mcc_001');
+
+insert into recipe_category_tb
+values('RCC005','RECIPE_005','cct_004','icc_004','kcc_002','scc_002','mcc_003');
+
+insert into recipe_category_tb
+values('RCC006','RECIPE_006','CCT_005','ICC_004','KCC_002','SCC_003','MCC_003');
+
+INSERT INTO recipe_category_tb
+values('RCC007','RECIPE_007','CCT_003','ICC_001','KCC_001','SCC_004','MCC_002');
+INSERT INTO recipe_category_tb
+values('RCC008','RECIPE_008','CCT_002','ICC_002','KCC_002','SCC_004','MCC_002');
+INSERT INTO recipe_category_tb
+values('RCC009','RECIPE_009','CCT_002','ICC_005','KCC_004','SCC_002','MCC_005');
+INSERT INTO recipe_category_tb
+values('RCC010','RECIPE_010','CCT_001','ICC_001','KCC_004','SCC_003','MCC_002');
+
+insert into preference_tb
+values('PREFER_001',3,'USER_001','RECIPE_001');
+insert into preference_tb
+values('PREFER_002',1,'USER_001','RECIPE_002');
+insert into preference_tb
+values('PREFER_003',1,'USER_001','RECIPE_004');
+insert into preference_tb
+values('PREFER_005',5,'USER_001','RECIPE_005');
+insert into preference_tb
+values('PREFER_006',2,'USER_001','RECIPE_006');
+insert into preference_tb
+values('PREFER_007',2,'USER_001','RECIPE_007');
+insert into preference_tb
+values('PREFER_008',2,'USER_001','RECIPE_008');
+insert into preference_tb
+values('PREFER_009',5,'USER_001','RECIPE_009');
+insert into preference_tb
+values('PREFER_010',1,'USER_001','RECIPE_010');
+
+INSERT INTO user_tb(user_code,user_name,user_image,user_email,user_password,user_gender,user_birthday,USER_SNS)
+VALUES('USER_001','전상우','http://www.naver.com','swj1539@naver.com','1539','남성',to_date('1990/08/04','yyyy/mm/dd',0));
+
+insert into video_category_tb values('videocatecode1','냉장고를 부탁해');
+insert into video_category_tb values('videocatecode2','삼시세끼');
+insert into video_category_tb values('videocatecode3','테이스티로드');
+insert into video_category_tb values('videocatecode4','올리브 쿡');
+insert into video_category_tb values('videocatecode5','올리브쇼2015');
+insert into video_category_tb values('videocatecode6','한식대첩3');
+
+
+
+insert into post_tb(post_code,recipe_code,user_code,like_count,post_hits,post_hash_tag,post_date)
+values('POST_001','RECIPE_001','USER_001',1234,432524,'#김치#스팸#밥',sysdate);
+insert into post_tb(post_code,recipe_code,user_code,like_count,post_hits,post_hash_tag,post_date)
+values('POST_002','RECIPE_002','USER_001',1635,1331524,'#김치#스팸#밥',sysdate);
+insert into post_tb(post_code,recipe_code,user_code,like_count,post_hits,post_hash_tag,post_date)
+values('POST_003','RECIPE_003','USER_001',1541,13432524,'#총각#김치#시원',sysdate);
+insert into post_tb(post_code,recipe_code,user_code,like_count,post_hits,post_hash_tag,post_date)
+values('POST_004','RECIPE_004','USER_001',6346,165524,'#고기#갈비#밥',sysdate);
+insert into post_tb(post_code,recipe_code,user_code,like_count,post_hits,post_hash_tag,post_date)
+values('POST_005','RECIPE_005','USER_001',6432,1568524,'#치즈#라면#야식',sysdate);
+insert into post_tb(post_code,recipe_code,user_code,like_count,post_hits,post_hash_tag,post_date)
+values('POST_006','RECIPE_006','USER_001',2432,135724,'#볶음#라면#후식',sysdate);
+insert into post_tb(post_code,recipe_code,user_code,like_count,post_hits,post_hash_tag,post_date)
+values('POST_007','RECIPE_007','USER_001',1123,13485524,'#갈비#탕',sysdate);
+insert into post_tb(post_code,recipe_code,user_code,like_count,post_hits,post_hash_tag,post_date)
+values('POST_008','RECIPE_008','USER_001',1553,13257524,'#김치#스팸#밥',sysdate);
+insert into post_tb(post_code,recipe_code,user_code,like_count,post_hits,post_hash_tag,post_date)
+values('POST_009','RECIPE_009','USER_001',23421,14527524,'#갈비#치즈#덮밥',sysdate);
+insert into post_tb(post_code,recipe_code,user_code,like_count,post_hits,post_hash_tag,post_date)
+values('POST_010','RECIPE_010','USER_001',6264,143324,'#치즈#마요네즈#덮밥',sysdate);
+
+insert into post_tb(post_code,recipe_code,user_code,like_count,post_hits,post_hash_tag,post_date)
+values('POST_001','RECIPE_001','USER_001',243,2524,'#김치#스팸#밥',sysdate);
+insert into post_tb(post_code,recipe_code,user_code,like_count,post_hits,post_hash_tag,post_date)
+values('POST_002','RECIPE_002','USER_001',534,4524,'#김치#부침#밀가루',sysdate);
+insert into post_tb(post_code,recipe_code,user_code,like_count,post_hits,post_hash_tag,post_date)
+values('POST_003','RECIPE_003','USER_001',134,2344,'#총각#김치#시원',sysdate);
+insert into post_tb(post_code,recipe_code,user_code,like_count,post_hits,post_hash_tag,post_date)
+values('POST_004','RECIPE_004','USER_001',122,2524,'#고기#갈비#만두',sysdate);
+insert into post_tb(post_code,recipe_code,user_code,like_count,post_hits,post_hash_tag,post_date)
+values('POST_005','RECIPE_005','USER_001',234,4234,'#치즈#라면#얼큰',sysdate);
+insert into post_tb(post_code,recipe_code,user_code,like_count,post_hits,post_hash_tag,post_date)
+values('POST_006','RECIPE_006','USER_001',345,4536,'#볶음#라면#얼큰',sysdate);
+insert into post_tb(post_code,recipe_code,user_code,like_count,post_hits,post_hash_tag,post_date)
+values('POST_007','RECIPE_007','USER_001',563,5686,'#해물#파전#밀가루',sysdate);
+insert into post_tb(post_code,recipe_code,user_code,like_count,post_hits,post_hash_tag,post_date)
+values('POST_008','RECIPE_008','USER_001',234,8756,'#고기#갈비#탕',sysdate);
+insert into post_tb(post_code,recipe_code,user_code,like_count,post_hits,post_hash_tag,post_date)
+values('POST_009','RECIPE_009','USER_001',192,3456,'#갈비#치즈#볶음밥',sysdate);
+insert into post_tb(post_code,recipe_code,user_code,like_count,post_hits,post_hash_tag,post_date)
+values('POST_010','RECIPE_010','USER_001',593,6543,'#치즈#마요네즈#덮밥',sysdate);

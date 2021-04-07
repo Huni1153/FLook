@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
+  <display-name>Flook</display-name>
+  <welcome-file-list>
+    <welcome-file>Login.html</welcome-file>
+
+  </welcome-file-list>
+  <servlet>
+    <description></description>
+    <display-name>FlookRecipe</display-name>
+    <servlet-name>FlookRecipe</servlet-name>
+    <servlet-class>Servlet.FlookRecipe</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>FlookRecipe</servlet-name>
+    <url-pattern>/recipeFlook</url-pattern>
+  </servlet-mapping>
+  
+   <servlet>
+    <description></description>
+    <display-name>WriteRecipeServlet</display-name>
+    <servlet-name>WriteRecipeServlet</servlet-name>
+    <servlet-class>Servlet.WriteRecipeServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>WriteRecipeServlet</servlet-name>
+    <url-pattern>/writeRecipe</url-pattern>
+  </servlet-mapping>
+  
+  
+  <servlet>
+    <description></description>
+    <display-name>VideoRecipeServlet</display-name>
+    <servlet-name>VideoRecipeServlet</servlet-name>
+    <servlet-class>Servlet.VideoRecipeServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>VideoRecipeServlet</servlet-name>
+    <url-pattern>/VideoRecipe</url-pattern>
+  </servlet-mapping>
+  <!--기호가 추가한 부분 -->
+    <servlet>
+    <description></description>
+    <display-name>JoinServlet</display-name>
+    <servlet-name>JoinServlet</servlet-name>
+    <servlet-class>Servlet.JoinServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>JoinServlet</servlet-name>
+    <url-pattern>/join</url-pattern>
+  </servlet-mapping>
+ <servlet>
+    <description></description>
+    <display-name>LoginServlet</display-name>
+    <servlet-name>LoginServlet</servlet-name>
+    <servlet-class>Servlet.LoginServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>LoginServlet</servlet-name>
+    <url-pattern>/login</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>SearchingServlet</display-name>
+    <servlet-name>SearchingServlet</servlet-name>
+    <servlet-class>Servlet.SearchingServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SearchingServlet</servlet-name>
+    <url-pattern>/search</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>SignInServlet</display-name>
+    <servlet-name>SignInServlet</servlet-name>
+    <servlet-class>Servlet.SignInServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SignInServlet</servlet-name>
+    <url-pattern>/facebook</url-pattern>
+  </servlet-mapping>
+   
+   <servlet>
+    <description></description>
+    <display-name>ProfileServlet</display-name>
+    <servlet-name>ProfileServlet</servlet-name>
+    <servlet-class>Servlet.ProfileServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ProfileServlet</servlet-name>
+    <url-pattern>/profileAnalyzing</url-pattern>
+  </servlet-mapping>
+</web-app>

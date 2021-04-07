@@ -1,0 +1,137 @@
+---------------------------------»çÀüÀÛ¾÷-------------------------------------------------------------------------------------------------------------------------
+create table post_tb (post_code varchar2(100) not null constraints post_tb_post_code_pk primary key
+,recipe_code varchar2(100) not null ,constraints post_tb_recipe_code_fk foreign key (recipe_code) references recipe_tb(recipe_code)
+,user_code varchar2(100) not null,constraints post_tb_user_code_fk foreign key (user_code) references user_tb(user_code)
+,like_count NUMBER not null,post_hits number not null, post_hash_tag varchar2(1000) null,post_date date not null);
+
+create table niceness_info_tb(niceness_code char(18) not null constraint niceness_info_tb_pk primary key,
+niceness_user_code VARCHAR2(100) CONSTRAINT nicess_user_code_fk references user_tb(user_code),
+post_code varchar2(100) references post_tb(post_code),
+niceness_date date not null
+);
+
+create or replace view simple_recipe_view
+as
+select r.recipe_code,p.post_code,r.complete_image,r.recipe_name,r.recipe_description,p.like_count,p.post_hits
+from recipe_tb r
+join post_tb p
+on r.recipe_code=p.recipe_code
+
+create or replace view flook_recipe_view
+as
+select p.post_code,r.recipe_code,r.complete_image,r.recipe_description,r.person_number,r.cooking_time,r.cooking_level,r.recipe_name,p.like_count,p.post_hits,p.post_hash_tag
+,r.recipe_name,p.like_count,p.post_hits,p.post_hash_tag
+from recipe_tb r
+join post_tb p
+on r.recipe_code=p.recipe_code;
+
+insert into user_tb(user_code,user_name,user_image,user_email,user_password,user_gender,user_birthday)
+values('5','¹Ú¼¼ÈÆ','https://ddfgf1312sx1cs.cloudfront.net/user/1595321457/thumb/4013b90123ba44e55e5dbe1dsf2314325rf12sdfd.jpg','zxca1520@naver.com','1153','³²ÀÚ','1991/01/15');
+
+insert into recipe_tb(recipe_code,complete_image,recipe_name,recipe_description,person_number,cooking_time,cooking_level)
+values('2','https://d12hfz37g51hrt.cloudfront.net/user/1595457/thumb/4013b90ba44e55e5dbea7ad5c7337907c7a1d4dd.jpg','±èÄ¡ ººÀ½¹ä È²±Ý ·¹½ÃÇÇ','±èºº Â¯¸ÀÀÖÀ½',1,'40ºÐ','½¬¿ò');
+
+delete from post_tb where post_code=1;
+
+update post_tb
+set like_count=20000
+where post_code=3;
+
+delete from user_tb where user_name='¹Ú¼¼ÈÆ';
+
+insert into post_tb(post_code,recipe_code,user_code,like_count,post_hits,post_hash_tag,post_date)
+values('1','2','2',124214,1332524,'#Ä¡Å²#¸ÀÀÖ´Ù',sysdate);
+
+insert into video_recipe_tb(video_recipe_code,video_name,video_url,recipe_code)
+values('2','Ä¡Å²ÀÌ¿À~2','http://www.youtube.com/v/LFDjS_Ix0rQ','2');
+
+delete from niceness_info_tb
+where niceness_code='1'; 
+
+insert into niceness_info_tb(niceness_code,niceness_user_code,post_code,niceness_date)
+values('1','5','1',sysdate);
+
+select *
+from niceness_info_tb;
+
+select *
+from recipe_like_event_view;
+
+select *
+from simple_recipe_view
+
+select *
+from user_tb
+
+select *
+from recipe_tb
+
+select *
+from post_tb
+
+select *
+from simple_recipe_view;
+
+select *
+from simple_recipe_view
+where recipe_name like '%Ä¡Å²%';
+
+select *
+from flook_recipe_view;
+
+select *
+from video_recipe_view;
+
+select *
+from simple_video_recipe_view;
+
+drop table post_tb;
+---------------------------------------------------------------------------------------------------------------
+
+===============================================================================Ãß°¡ ³»¿ë=====================================================================================
+
+---------recipe_comment_event_view--------------------------------------------------------------------------------------
+create or replace view recipe_comment_event_view
+as
+select c.comment_user_code,c.comment_code,u.user_code,r.recipe_code,p.post_code,c.comment_date,r.complete_image,r.recipe_name,cu.user_name,cu.user_image
+from comment_tb c
+join user_tb cu
+on c.comment_user_code=cu.user_code
+join post_tb p
+on p.post_code=c.post_code
+join user_tb u
+on p.user_code=u.user_code
+join recipe_tb r
+on r.recipe_code=p.recipe_code;
+------------------------------------------------------------------------------------------------------------------------
+
+
+--------------------comment_tb----------------------------------------------------------------------------------------------------
+create table comment_tb (
+comment_code varchar2(100) constraints comment_tb_comment_code_pk primary key,
+user_code varchar2(1000) constraints comment_tb_user_code_fk references user_tb(user_code),
+comment_contents varchar2(1000) not null,
+comment_date date not null,
+post_code varchar2(100) not null constraints comment_tb_post_code_fk references post_tb(post_code));
+
+
+alter table comment_tb rename column user_code to comment_user_code;
+----------------------------------------------------------------------------------------------------------------------------------
+
+
+--------------------recipe_like_event_view--------------------------------------------------------------------------------
+create or replace view recipe_like_event_view
+as
+select n.niceness_user_code,n.niceness_code,p.post_code,r.recipe_code,u.user_code,r.complete_image,r.recipe_name,nu.user_name,nu.user_image
+from niceness_info_tb n
+join user_tb nu
+on nu.user_code=n.niceness_user_code
+join post_tb p
+on n.post_code=p.post_code
+join recipe_tb r
+on r.recipe_code=p.recipe_code
+join user_tb u
+on p.user_code=u.user_code;
+------------------------------------------------------------------------------------------------------------------------
+
+

@@ -1,0 +1,31 @@
+﻿INSERT INTO recipe_tb
+VALUES('UR001','https://upload.namu.wiki/upload/%EC%B9%98%EC%A6%88%EB%9D%BC%EB%A9%B4%2Fd0030305_48cc0dbd3e13d.jpg','치즈 카레 라면','해피투게더 9호 야간매점 메뉴인 카치면입니다',1,'10분','쉬움');
+
+INSERT INTO recipe_tb
+VALUES('UR002','http://www.ktowntogo.com/files/menu/totowah_name_1337970768_%EA%B9%80%EC%B9%98_%EB%B3%B6%EC%9D%8C%EB%B0%A5.jpg','오징어채무침','오징어채무침을 소개합니다.',1,'10분','쉬움');
+
+INSERT INTO recipe_tb
+VALUES('UR003','http://recipe.ezmember.co.kr/cache/recipe/2015/06/08/1f869febe63cf09dae560fc86a4c6350.jpg','매운 어묵볶음','매운 어묵볶음만들기:)',1,'10분','쉬움');
+INSERT INTO ingredient_tb
+VALUES('MI001','UR001','라면',1,'주','IUC003');
+INSERT INTO ingredient_tb
+VALUES('MI002','UR001','카레소스',200,'주','IUC001');
+INSERT INTO ingredient_tb
+VALUES('SI001','UR001','치즈',2,'부','IUC002');
+
+INSERT INTO cooking_tb
+VALUES('UC001','UR001',1,'http://recipe.ezmember.co.kr/cache/recipe/2015/06/26/8381fa8d6ecb6dcf279bd906ebe69f731.jpg',
+'물을 일반 라면 물보다 적게 잡으셔야해요~ 보통 라면 끓일때에는 물을 550ml 잡아야한다면 카치면에는 물을 380ml 정도만 잡아주면 되어요~ 끓는물에 라면사리를 넣고 절반 정도 익혀준후');
+INSERT INTO cooking_tb
+VALUES('UC002','UR001',2,'http://recipe.ezmember.co.kr/cache/recipe/2015/06/26/4cc26ab2b370cbdeae5a661a320b3fee1.jpg','카레소스를 200g 정도 넣어줍니다~ 카레소스는 취향껏 가감해주심 될것 같아요~');
+INSERT INTO cooking_tb
+VALUES('UC003','UR001',3,'http://recipe.ezmember.co.kr/cache/recipe/2015/06/26/27d765e6377441502bb94779980645be1.jpg','면과 카레소스가 어우러지도록 섞어 끓이며');
+INSERT INTO cooking_tb
+VALUES('UC004','UR001',4,'http://recipe.ezmember.co.kr/cache/recipe/2015/06/26/27d765e6377441502bb94779980645be1.jpg','마지막에 슬라이스치즈 한장을 얹어 녹여가며 면을 마저 익혀줍니다');
+
+insert into post_tb
+values('UP001','UR001','UT001',0,0,'#카레소스','15/08/05');
+
+
+insert into recipe_category_Tb
+values('RCC001','UR001','CCT001','ICT001','KCT001','SCT001','MCT001');

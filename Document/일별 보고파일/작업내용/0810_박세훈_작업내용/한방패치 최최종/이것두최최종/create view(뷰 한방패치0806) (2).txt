@@ -1,0 +1,209 @@
+create or replace view simple_video_recipe_view
+as
+select p.post_code, v.video_recipe_code, v.video_name, v.video_url, v.recipe_code, r.complete_image, r.recipe_name, r.recipe_description, p.like_count,p.post_hits, p.post_date, c.video_category_code, c.video_category_name
+from video_recipe_tb v, post_tb p, recipe_tb r, video_category_tb c
+where v.recipe_code = r.recipe_code and r.recipe_code=p.recipe_code and c.video_category_code=v.video_category_code;
+
+create or replace view newsfeed_latest_order_view
+as
+select p.post_code, p.recipe_code, p.like_count, u.user_code, p.post_hits, p.post_date, r.complete_image, r.recipe_name, u.user_name, u.user_image, r.recipe_description
+from user_tb u, post_tb p, recipe_tb r
+where p.recipe_code = r.recipe_code and p.user_code = u.user_code;
+
+create or replace view newsfeed_latest_order_view
+as
+select p.post_code, p.recipe_code, p.like_count, u.user_code, p.post_hits, p.post_date, r.complete_image, r.recipe_name, u.user_name, u.user_image, r.recipe_description
+from user_tb u, post_tb p, recipe_tb r
+where p.recipe_code = r.recipe_code and p.user_code = u.user_code;
+
+create or replace view comment_view
+AS
+SELECT c.comment_code,c.comment_user_code,u.user_name,u.user_image,c.comment_contents,c.post_code
+from comment_tb c
+join user_tb u
+on c.comment_user_code=u.user_code
+join post_tb p
+on p.post_code = c.post_code;
+
+create or replace view flook_recipe_view
+as
+select p.post_code,r.recipe_code,r.complete_image,r.recipe_description,r.person_number,r.cooking_time,r.cooking_level,r.recipe_name,p.like_count,p.post_hits,p.post_hash_tag
+from recipe_tb r
+join post_tb p
+on r.recipe_code=p.recipe_code;
+
+create or replace view follow_written_recipe_view
+as
+select
+f.follow_code , u.user_code, f.follow_user_code , p.post_code , r.recipe_code , p.like_count , p.post_hits,p.post_date,r.complete_image,r.recipe_name,r.recipe_description
+from
+user_tb u
+join follow_tb f
+on f.user_code = u.user_code AND f.follow_user_code = u.user_code
+join post_tb p
+on f.follow_user_code = p.user_code
+join recipe_tb r
+on r.recipe_code = p.post_code;
+
+
+create or replace view follow_view
+AS
+SELECT fb.follow_code follow_code,ub.user_code user_code, ub.user_name user_name, ub.user_image user_image,ub2.user_code follow_user_code, ub2.user_name  follow_user_name,
+ub2.user_image follow_user_image
+FROM follow_tb fb,user_tb ub,user_tb ub2
+where fb.follow_user_code=ub.user_code AND fb.user_code=ub2.user_code;
+
+
+create or replace view scrap_view
+as 
+select s.scrap_code,p.post_code,r.recipe_code,u.user_code,u.user_name,u.user_email,r.complete_image,r.recipe_name,r.recipe_description,p.like_count,p.post_hits,s.scrap_date
+from user_tb u
+join post_tb p
+on u.user_code = p.user_code
+join scrap_tb s
+on s.post_code=p.post_code
+join recipe_tb r
+on r.recipe_code = p.recipe_code;
+
+
+CREATE OR REPLACE VIEW simple_recipe_view
+AS
+select r.recipe_code,p.post_code,r.complete_image,r.recipe_name,r.recipe_description,p.like_count,p.post_hits,cct.country_category_name,ict.ingredient_category_name,kct.kind_category_name,sct.situation_category_name,mct.method_category_name
+FROM recipe_tb r,post_tb p,recipe_category_tb rc,country_category_tb cct,ingredient_category_tb ict,kind_category_tb kct,situation_category_tb sct,method_category_tb mct
+WHERE p.recipe_code=r.recipe_code
+AND r.recipe_code=rc.recipe_code
+AND rc.country_category_code=cct.country_category_code
+AND rc.ingredient_category_code =ict.ingredient_category_code
+AND rc.kind_category_code=kct.kind_category_code
+AND rc.situation_category_code=sct.situation_category_code
+AND rc.method_category_code=mct.method_category_code;
+
+create or replace view scrap_event_view
+as
+select
+s.scrap_code,r.recipe_code,u.user_code,p.post_code,s.scrap_date,r.complete_image,r.recipe_name,r.recipe_description,u.user_image
+from post_tb p
+join recipe_tb r
+on r.recipe_code=p.recipe_code
+join user_tb u
+on u.user_code = p.user_code
+join scrap_tb s
+on s.post_code=p.post_code;
+
+
+
+create or replace view video_recipe_view
+as
+select p.post_code,r.recipe_code,v.video_recipe_code,v.video_name,r.complete_image,r.recipe_name,r.recipe_description,r.person_number,r.cooking_time,r.cooking_level,v.video_url,p.like_count,p.post_hits,p.post_hash_tag
+from post_tb p
+join recipe_tb r
+on p.recipe_code=r.recipe_code
+join video_recipe_tb v
+on r.recipe_code=v.recipe_code;
+
+
+
+CREATE OR REPLACE VIEW simple_user_recipe_view
+AS
+SELECT p.post_code,r.recipe_code,u.user_code,u.user_name,r.complete_image,r.recipe_name,r.recipe_description,p.like_count,p.post_hits,cct.country_category_name,ict.ingredient_category_name,kct.kind_category_name,sct.situation_category_name,mct.method_category_name
+FROM post_tb p,recipe_tb r,user_tb u,recipe_category_tb rc,country_category_tb cct,ingredient_category_tb ict,kind_category_tb kct,situation_category_tb sct,method_category_tb mct
+WHERE p.recipe_code=r.recipe_code
+AND p.user_code=u.user_code
+AND r.recipe_code=rc.recipe_code
+AND rc.country_category_code=cct.country_category_code
+AND rc.ingredient_category_code =ict.ingredient_category_code
+AND rc.kind_category_code=kct.kind_category_code
+AND rc.situation_category_code=sct.situation_category_code
+AND rc.method_category_code=mct.method_category_code;
+
+CREATE OR REPLACE VIEW user_recipe_view
+AS
+SELECT p.post_code,r.recipe_code,u.user_code,r.complete_image,r.recipe_name,r.recipe_description,r.person_number,r.cooking_time,r.cooking_level,p.like_count,p.post_hits,p.post_hash_tag,u.user_name,u.user_image
+FROM post_tb p,recipe_tb r,user_tb u
+WHERE p.recipe_code=r.recipe_code AND p.user_code=u.user_code;
+
+create or replace view sns_friend_view
+as
+select s.sns_friend_code, s.user_code, s.friend_user_code, u.user_name, u.user_image, u.user_birthday, f.follow_user_code, f.follow_code
+from sns_friend_tb s, user_tb u, follow_tb f
+where (u.user_code = s.user_code and s.user_code=f.user_code) or
+(u.user_code=s.user_code );
+
+create or replace view my_country_preference_view
+AS
+select user_code ,cct.country_CATEGORY_CODE,cct.country_CATEGORY_NAME, sum(preference_Score) score_total
+from preference_tb pt,recipe_category_tb rct, country_category_tb cct
+where pt.recipe_code=rct.recipe_code AND rct.country_CATEGORY_CODE=cct.country_CATEGORY_CODE
+group by user_code,cct.country_CATEGORY_CODE,cct.country_CATEGORY_NAME;
+
+create or replace view my_ingredient_preference_view
+AS
+select user_code ,ict.INGREDIENT_CATEGORY_CODE,ict.INGREDIENT_CATEGORY_NAME, sum(preference_Score) score_total
+from preference_tb pt,recipe_category_tb rct, ingredient_category_tb ict
+where pt.recipe_code=rct.recipe_code AND rct.INGREDIENT_CATEGORY_CODE=ict.INGREDIENT_CATEGORY_CODE
+group by user_code,ict.INGREDIENT_CATEGORY_CODE,ict.INGREDIENT_CATEGORY_NAME;
+
+create or replace view my_kind_preference_view
+AS
+select user_code ,kct.KIND_CATEGORY_CODE,kct.KIND_CATEGORY_NAME, sum(preference_Score) score_total
+from preference_tb pt,recipe_category_tb rct, kind_category_tb kct
+where pt.recipe_code=rct.recipe_code AND rct.KIND_CATEGORY_CODE=kct.KIND_CATEGORY_CODE
+group by user_code,kct.KIND_CATEGORY_CODE,kct.KIND_CATEGORY_NAME;
+
+
+create or replace view my_situation_preference_view
+AS
+select user_code ,sct.situation_CATEGORY_CODE,sct.situation_CATEGORY_NAME, sum(preference_Score) score_total
+from preference_tb pt,recipe_category_tb rct, situation_category_tb sct
+where pt.recipe_code=rct.recipe_code AND rct.situation_CATEGORY_CODE=sct.situation_CATEGORY_CODE
+group by user_code,sct.situation_CATEGORY_CODE,sct.situation_CATEGORY_NAME;
+
+
+create or replace view my_method_preference_view
+AS
+select user_code ,mct.METHOD_CATEGORY_CODE,mct.METHOD_CATEGORY_NAME, sum(preference_Score) score_total
+from preference_tb pt,recipe_category_tb rct, method_category_tb mct
+where pt.recipe_code=rct.recipe_code AND rct.METHOD_CATEGORY_CODE=mct.METHOD_CATEGORY_CODE
+group by user_code,mct.METHOD_CATEGORY_CODE,mct.METHOD_CATEGORY_NAME;
+
+
+create or replace view follow_comment_recipe_view
+as
+select f.user_code, f.follow_user_code, f.follow_code, c.comment_code, c.comment_date, p.post_code, r.recipe_code, p.like_count, p.post_hits, r.complete_image, r.recipe_name, r.recipe_description
+from recipe_tb r, follow_tb f, comment_tb c, post_tb p
+where c.comment_user_code=f.follow_user_code and c.post_code=p.post_code and p.recipe_code=r.recipe_code;
+
+create or replace view follow_like_recipe_view
+as
+select f.user_code, f.follow_user_code, f.follow_code, n.niceness_code, p.post_code, n.niceness_date, p.like_count, p.post_hits, r.complete_image, r.recipe_name, r.recipe_description, u.user_image, u.user_name
+from post_tb p, follow_tb f, niceness_tb n, recipe_tb r, user_tb u
+where n.niceness_user_code=f.follow_user_code and n.post_code=p.post_code and p.recipe_code=r.recipe_code and f.follow_user_code=u.user_code;
+
+create or replace view follow_scrap_view
+as
+select f.user_code, f.follow_user_code, f.follow_code, s.scrap_code, s.post_code, s.scrap_date, p.recipe_code, p.like_count, p.post_hits, r.complete_image, r.recipe_name, r.recipe_description
+from follow_tb f, scrap_tb s, post_tb p, recipe_tb r
+where s.user_code=f.follow_user_code and s.post_code=p.post_code and p.recipe_code=r.recipe_code;
+
+CREATE OR REPLACE VIEW  recipe_category_view
+AS
+SELECT rc.recipe_code,cc.country_category_name,ic.ingredient_category_name,kc.kind_category_name,sc.situation_category_name,mc.method_category_name
+FROM 
+recipe_category_tb rc,country_category_tb cc,
+ingredient_category_tb ic,
+kind_category_tb kc,
+situation_category_tb sc,
+method_category_tb mc
+WHERE 
+rc.country_category_code=cc.country_category_code AND 
+rc.ingredient_category_code=ic.ingredient_category_code AND 
+rc.kind_category_code=kc.kind_category_code AND 
+rc.situation_category_code=sc.situation_category_code AND
+rc.method_category_code=mc.method_category_code;
+
+
+create view cart_view
+as
+select c.cart_code, r.complete_image, i.ingredient_code, c.user_code, r.recipe_code, r.recipe_name, i.ingredient_name, i.ingredient_amount
+from cart_tb c, ingredient_tb i, recipe_tb r
+where i.ingredient_code=c.ingredient_code and i.recipe_code=r.recipe_code;

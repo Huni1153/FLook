@@ -1,0 +1,100 @@
+INSERT INTO user_tb(user_code,user_name,user_image,user_email,user_password,user_gender,user_birthday,user_sns)
+VALUES('UT001','전상우','http://danjaes.cafe24.com/xe/files/attach/images/270/899/016/fdeb44ec92bdbbe713db1a82ccca9da9.jpg','swj1539@naver.com','1539','남성',to_date('1990/08/04','yyyy/mm/dd'),0);
+
+INSERT INTO user_tb(user_code,user_name,user_image,user_email,user_password,user_gender,user_birthday,USER_sns)
+VALUES('UT002','권기호','http://extmovie.maxmovie.com/xe/files/attach/images/174/403/879/49af9c5a401dd52e4d1274762c65e96c.jpg','swj1530@naver.com','1234','여성',to_date('1990/08/04','yyyy/mm/dd'),0);
+
+insert into ingredient_unit_category_tb values('IUC001', 'g');
+insert into ingredient_unit_category_tb values('IUC002', 'ml');
+insert into ingredient_unit_category_tb values('IUC003', '개');
+insert into ingredient_unit_category_tb values('IUC004', '종이컵');
+insert into ingredient_unit_category_tb values('IUC005', '숟가락');
+insert into ingredient_unit_category_tb values('IUC006', '줌');
+
+insert into ingredient_category_tb values('ICT000','재료별');
+insert into ingredient_category_tb values('ICT001','육류');
+insert into ingredient_category_tb values('ICT002','해물류/건어물류');
+insert into ingredient_category_tb values('ICT003','곡류');
+insert into ingredient_category_tb values('ICT004','콩/견과류');
+insert into ingredient_category_tb values('ICT005','채소류');
+insert into ingredient_category_tb values('ICT006','버섯류');
+insert into ingredient_category_tb values('ICT007','빵류');
+insert into ingredient_category_tb values('ICT008','가공식품류');
+insert into ingredient_category_tb values('ICT009','면류/떡류');
+insert into ingredient_category_tb values('ICT010','과일류');
+insert into ingredient_category_tb values('ICT011','달걀/유제품');
+insert into ingredient_category_tb values('ICT012','기타');
+
+insert into country_category_tb values('CCT000','나라별');
+insert into country_category_tb values('CCT001','한식');
+insert into country_category_tb values('CCT002','양식');
+insert into country_category_tb values('CCT003','일식');
+insert into country_category_tb values('CCT004','중식');
+insert into country_category_tb values('CCT005','기타');
+
+insert into kind_category_tb values('KCT000','종류별');
+insert into kind_category_tb values('KCT001','밥/죽');
+insert into kind_category_tb values('KCT002','면/만두');
+insert into kind_category_tb values('KCT003','국/탕/찌개');
+insert into kind_category_tb values('KCT004','김치/밑반찬');
+insert into kind_category_tb values('KCT005','샐러드/스프');
+insert into kind_category_tb values('KCT006','양념/소스/잼');
+insert into kind_category_tb values('KCT007','차/음료');
+insert into kind_category_tb values('KCT008','베이킹/떡');
+insert into kind_category_tb values('KCT009','도시락/간식/디저트');
+insert into kind_category_tb values('KCT010','튀김');
+insert into kind_category_tb values('KCT011','기타');
+
+insert into situation_category_tb values('SCT000','상황별');
+insert into situation_category_tb values('SCT001','일상');
+insert into situation_category_tb values('SCT002','손님접대');
+insert into situation_category_tb values('SCT003','이유식');
+insert into situation_category_tb values('SCT004','나들이');
+insert into situation_category_tb values('SCT005','간식');
+insert into situation_category_tb values('SCT006','초스피드');
+insert into situation_category_tb values('SCT007','술안주');
+insert into situation_category_tb values('SCT008','푸드 스타일링');
+insert into situation_category_tb values('SCT009','다이어트쿡');
+insert into situation_category_tb values('SCT010','영양식');
+insert into situation_category_tb values('SCT011','명절');
+insert into situation_category_tb values('SCT012','야식');
+insert into situation_category_tb values('SCT013','해장');
+insert into situation_category_tb values('SCT014','아침식사');
+insert into situation_category_tb values('SCT015','채식');
+insert into situation_category_tb values('SCT016','야식');
+insert into situation_category_tb values('SCT017','데이트');
+
+insert into method_category_tb values('MCT000','방법별');
+insert into method_category_tb values('MCT001','끓이기');
+insert into method_category_tb values('MCT002','볶음');
+insert into method_category_tb values('MCT003','부침');
+insert into method_category_tb values('MCT004','찜');
+insert into method_category_tb values('MCT005','튀김');
+insert into method_category_tb values('MCT006','절이기');
+insert into method_category_tb values('MCT007','구이');
+insert into method_category_tb values('MCT008','조림');
+insert into method_category_tb values('MCT009','회');
+insert into method_category_tb values('MCT010','삶기');
+insert into method_category_tb values('MCT011','데치기');
+insert into method_category_tb values('MCT012','무침');
+insert into method_category_tb values('MCT013','비빔');
+insert into method_category_tb values('MCT014','굽기');
+insert into method_category_tb values('MCT015','기타');
+
+insert into video_category_tb values('VCT001','냉장고를 부탁해');
+insert into video_category_tb values('VCT002','삼시세끼');
+insert into video_category_tb values('VCT003','테이스티로드');
+insert into video_category_tb values('VCT004','올리브 쿡');
+insert into video_category_tb values('VCT005','올리브쇼2015');
+insert into video_category_tb values('VCT006','한식대첩3');
+
+
+
+insert into preference_tb
+values('PREFER_001',5,'UT001','0101UR1438883964262');
+insert into preference_tb
+values('PREFER_002',3,'UT001','0101UR1438906516639');
+insert into preference_tb
+values('PREFER_003',1,'UT001','0101UR1438907264112');
+
+

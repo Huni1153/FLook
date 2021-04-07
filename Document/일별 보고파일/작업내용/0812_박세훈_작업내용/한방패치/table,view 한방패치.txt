@@ -1,0 +1,538 @@
+CREATE TABLE  "INGREDIENT_UNIT_CATEGORY_TB" 
+   (   "INGREDIENT_UNIT_CODE" VARCHAR2(100) NOT NULL ENABLE, 
+   "INGREDIENT_UNIT_NAME" VARCHAR2(100), 
+    CONSTRAINT "INGREDIENT_UNIT_TB_PK" PRIMARY KEY ("INGREDIENT_UNIT_CODE") ENABLE
+   )
+/
+CREATE TABLE  "RECIPE_TB" 
+   (   "RECIPE_CODE" VARCHAR2(100) NOT NULL ENABLE, 
+   "COMPLETE_IMAGE" VARCHAR2(2000) NOT NULL ENABLE, 
+   "RECIPE_NAME" VARCHAR2(100) NOT NULL ENABLE, 
+   "RECIPE_DESCRIPTION" VARCHAR2(2000), 
+   "PERSON_NUMBER" NUMBER NOT NULL ENABLE, 
+   "COOKING_TIME" VARCHAR2(100) NOT NULL ENABLE, 
+   "COOKING_LEVEL" VARCHAR2(100) NOT NULL ENABLE, 
+    CONSTRAINT "RECIPE_TB_RECIPE_CODE_PK" PRIMARY KEY ("RECIPE_CODE") ENABLE
+   )
+/
+CREATE TABLE  "INGREDIENT_TB" 
+   (   "INGREDIENT_CODE" VARCHAR2(100) NOT NULL ENABLE, 
+   "RECIPE_CODE" VARCHAR2(100) NOT NULL ENABLE, 
+   "INGREDIENT_NAME" VARCHAR2(100) NOT NULL ENABLE, 
+   "INGREDIENT_AMOUNT" NUMBER, 
+   "INGREDIENT_TYPE" VARCHAR2(100) NOT NULL ENABLE, 
+   "INGREDIENT_UNIT_CODE" VARCHAR2(100), 
+    CONSTRAINT "INGREDIENT_TB_CODE_PK" PRIMARY KEY ("INGREDIENT_CODE") ENABLE, 
+    CONSTRAINT "INGREDIENT_TB_RECIPE_CODE_FK" FOREIGN KEY ("RECIPE_CODE")
+     REFERENCES  "RECIPE_TB" ("RECIPE_CODE") ENABLE, 
+    CONSTRAINT "INGRE_CATE_TB_UNIT_CODE_FK" FOREIGN KEY ("INGREDIENT_UNIT_CODE")
+     REFERENCES  "INGREDIENT_UNIT_CATEGORY_TB" ("INGREDIENT_UNIT_CODE") ENABLE
+   )
+/
+CREATE TABLE  "USER_TB" 
+   (   "USER_CODE" VARCHAR2(100) NOT NULL ENABLE, 
+   "USER_IMAGE" VARCHAR2(2000), 
+   "USER_NAME" VARCHAR2(20) NOT NULL ENABLE, 
+   "USER_EMAIL" VARCHAR2(320), 
+   "USER_PASSWORD" VARCHAR2(60) NOT NULL ENABLE, 
+   "USER_GENDER" VARCHAR2(20) NOT NULL ENABLE, 
+   "USER_BIRTHDAY" DATE NOT NULL ENABLE, 
+   "USER_SNS" NUMBER, 
+    CONSTRAINT "USER_TB_USER_CODE_PK" PRIMARY KEY ("USER_CODE") ENABLE, 
+    UNIQUE ("USER_EMAIL") ENABLE
+   )
+/
+CREATE TABLE  "CART_TB" 
+   (   "CART_CODE" VARCHAR2(100) NOT NULL ENABLE, 
+   "USER_CODE" VARCHAR2(100) NOT NULL ENABLE, 
+   "INGREDIENT_CODE" VARCHAR2(100) NOT NULL ENABLE, 
+    CONSTRAINT "CART_TB_CART_CODE_PK" PRIMARY KEY ("CART_CODE") ENABLE, 
+    CONSTRAINT "CART_TB_USER_CODE_FK" FOREIGN KEY ("USER_CODE")
+     REFERENCES  "USER_TB" ("USER_CODE") ENABLE, 
+    CONSTRAINT "CART_TB_INGREDIENT_CODE_FK" FOREIGN KEY ("INGREDIENT_CODE")
+     REFERENCES  "INGREDIENT_TB" ("INGREDIENT_CODE") ENABLE
+   )
+/
+CREATE TABLE  "POST_TB" 
+   (   "POST_CODE" VARCHAR2(100) NOT NULL ENABLE, 
+   "RECIPE_CODE" VARCHAR2(100) NOT NULL ENABLE, 
+   "USER_CODE" VARCHAR2(100) NOT NULL ENABLE, 
+   "LIKE_COUNT" NUMBER NOT NULL ENABLE, 
+   "POST_HITS" NUMBER NOT NULL ENABLE, 
+   "POST_HASH_TAG" VARCHAR2(1000), 
+   "POST_DATE" DATE NOT NULL ENABLE, 
+    CONSTRAINT "POST_TB_POST_CODE_PK" PRIMARY KEY ("POST_CODE") ENABLE, 
+    CONSTRAINT "POST_TB_RECIPE_CODE_FK" FOREIGN KEY ("RECIPE_CODE")
+     REFERENCES  "RECIPE_TB" ("RECIPE_CODE") ENABLE, 
+    CONSTRAINT "POST_TB_USER_CODE_FK" FOREIGN KEY ("USER_CODE")
+     REFERENCES  "USER_TB" ("USER_CODE") ENABLE
+   )
+/
+CREATE TABLE  "COMMENT_TB" 
+   (   "COMMENT_CODE" VARCHAR2(100), 
+   "COMMENT_USER_CODE" VARCHAR2(1000) NOT NULL ENABLE, 
+   "COMMENT_CONTENTS" VARCHAR2(1000) NOT NULL ENABLE, 
+   "COMMENT_DATE" DATE NOT NULL ENABLE, 
+   "POST_CODE" VARCHAR2(100) NOT NULL ENABLE, 
+    CONSTRAINT "COMMENT_TB_COMMENT_CODE_PK" PRIMARY KEY ("COMMENT_CODE") ENABLE, 
+    CONSTRAINT "COMMENT_TB_USER_CODE_FK" FOREIGN KEY ("COMMENT_USER_CODE")
+     REFERENCES  "USER_TB" ("USER_CODE") ENABLE, 
+    CONSTRAINT "COMMENT_TB_POST_CODE_FK" FOREIGN KEY ("POST_CODE")
+     REFERENCES  "POST_TB" ("POST_CODE") ENABLE
+   )
+/
+CREATE TABLE  "COOKING_TB" 
+   (   "COOKING_CODE" VARCHAR2(100) NOT NULL ENABLE, 
+   "RECIPE_CODE" VARCHAR2(100) NOT NULL ENABLE, 
+   "COOKING_SEQUENCE" NUMBER NOT NULL ENABLE, 
+   "COOKING_IMAGE" VARCHAR2(2000) NOT NULL ENABLE, 
+   "COOKING_CAPTION" VARCHAR2(2000), 
+    CONSTRAINT "COOKING_TB_COOKING_CODE_PK" PRIMARY KEY ("COOKING_CODE") ENABLE, 
+    CONSTRAINT "COOKING_TB_RECIPE_CODE_FK" FOREIGN KEY ("RECIPE_CODE")
+     REFERENCES  "RECIPE_TB" ("RECIPE_CODE") ENABLE
+   )
+/
+CREATE TABLE  "COUNTRY_CATEGORY_TB" 
+   (   "COUNTRY_CATEGORY_CODE" VARCHAR2(100), 
+   "COUNTRY_CATEGORY_NAME" VARCHAR2(100) NOT NULL ENABLE, 
+    PRIMARY KEY ("COUNTRY_CATEGORY_CODE") ENABLE
+   )
+/
+CREATE TABLE  "FOLLOW_TB" 
+   (   "FOLLOW_CODE" VARCHAR2(100) NOT NULL ENABLE, 
+   "USER_CODE" VARCHAR2(100), 
+   "FOLLOW_USER_CODE" VARCHAR2(100), 
+    CONSTRAINT "FOLLOW_TB_PK" PRIMARY KEY ("FOLLOW_CODE") ENABLE, 
+    CONSTRAINT "FOLLOW_TB_USER_CODE_FK" FOREIGN KEY ("USER_CODE")
+     REFERENCES  "USER_TB" ("USER_CODE") ENABLE, 
+    CONSTRAINT "FOLLOW_TB_USER_CODE_FK2" FOREIGN KEY ("FOLLOW_USER_CODE")
+     REFERENCES  "USER_TB" ("USER_CODE") ENABLE
+   )
+/
+CREATE TABLE  "INGREDIENT_CATEGORY_TB" 
+   (   "INGREDIENT_CATEGORY_CODE" VARCHAR2(100) NOT NULL ENABLE, 
+   "INGREDIENT_CATEGORY_NAME" VARCHAR2(100) NOT NULL ENABLE, 
+    CONSTRAINT "INGREDIENT_CATEGORY_CODE_PK" PRIMARY KEY ("INGREDIENT_CATEGORY_CODE") ENABLE
+   )
+/
+CREATE TABLE  "KIND_CATEGORY_TB" 
+   (   "KIND_CATEGORY_CODE" VARCHAR2(100), 
+   "KIND_CATEGORY_NAME" VARCHAR2(100) NOT NULL ENABLE, 
+    PRIMARY KEY ("KIND_CATEGORY_CODE") ENABLE
+   )
+/
+CREATE TABLE  "METHOD_CATEGORY_TB" 
+   (   "METHOD_CATEGORY_CODE" VARCHAR2(100), 
+   "METHOD_CATEGORY_NAME" VARCHAR2(100) NOT NULL ENABLE, 
+    PRIMARY KEY ("METHOD_CATEGORY_CODE") ENABLE
+   )
+/
+CREATE TABLE  "MOOD_TB" 
+   (   "MOOD_IDENTITY_CODE" VARCHAR2(100), 
+   "RECIPE_CODE" VARCHAR2(100), 
+   "MOOD_NAME" VARCHAR2(100), 
+    PRIMARY KEY ("MOOD_IDENTITY_CODE") ENABLE, 
+    CONSTRAINT "MOOD_TB_RECIPE_TB_FK" FOREIGN KEY ("RECIPE_CODE")
+     REFERENCES  "RECIPE_TB" ("RECIPE_CODE") ENABLE
+   )
+/
+CREATE TABLE  "NICENESS_TB" 
+   (   "NICENESS_CODE" VARCHAR2(100) NOT NULL ENABLE, 
+   "NICENESS_USER_CODE" VARCHAR2(100), 
+   "POST_CODE" VARCHAR2(100), 
+   "NICENESS_DATE" DATE NOT NULL ENABLE, 
+    CONSTRAINT "NICENESS_INFO_TB_PK" PRIMARY KEY ("NICENESS_CODE") ENABLE, 
+    CONSTRAINT "NICESS_USER_CODE_FK" FOREIGN KEY ("NICENESS_USER_CODE")
+     REFERENCES  "USER_TB" ("USER_CODE") ENABLE, 
+    CONSTRAINT "NICENESS_TB_POST_CODE_FK" FOREIGN KEY ("POST_CODE")
+     REFERENCES  "POST_TB" ("POST_CODE") ENABLE
+   )
+/
+CREATE TABLE  "PREFERENCE_TB" 
+   (   "PREFERENCE_CODE" VARCHAR2(100) NOT NULL ENABLE, 
+   "PREFERENCE_SCORE" NUMBER NOT NULL ENABLE, 
+   "USER_CODE" VARCHAR2(100) NOT NULL ENABLE, 
+   "RECIPE_CODE" VARCHAR2(100) NOT NULL ENABLE, 
+    CONSTRAINT "PREFERENCE_TB_PREFER_CODE_PK" PRIMARY KEY ("PREFERENCE_CODE") ENABLE, 
+    CONSTRAINT "PREFERENCE_TB_USER_CODE_FK" FOREIGN KEY ("USER_CODE")
+     REFERENCES  "USER_TB" ("USER_CODE") ENABLE, 
+    CONSTRAINT "PREFERENCE_TB_RECIPE_CODE_FK" FOREIGN KEY ("RECIPE_CODE")
+     REFERENCES  "RECIPE_TB" ("RECIPE_CODE") ENABLE
+   )
+/
+CREATE TABLE  "SITUATION_CATEGORY_TB" 
+   (   "SITUATION_CATEGORY_CODE" VARCHAR2(100), 
+   "SITUATION_CATEGORY_NAME" VARCHAR2(100) NOT NULL ENABLE, 
+    PRIMARY KEY ("SITUATION_CATEGORY_CODE") ENABLE
+   )
+/
+CREATE TABLE  "RECIPE_CATEGORY_TB" 
+   (   "RECIPE_CATEGORY_CODE" VARCHAR2(100) NOT NULL ENABLE, 
+   "RECIPE_CODE" VARCHAR2(100) NOT NULL ENABLE, 
+   "COUNTRY_CATEGORY_CODE" VARCHAR2(100) NOT NULL ENABLE, 
+   "INGREDIENT_CATEGORY_CODE" VARCHAR2(100) NOT NULL ENABLE, 
+   "KIND_CATEGORY_CODE" VARCHAR2(100) NOT NULL ENABLE, 
+   "SITUATION_CATEGORY_CODE" VARCHAR2(100) NOT NULL ENABLE, 
+   "METHOD_CATEGORY_CODE" VARCHAR2(100) NOT NULL ENABLE, 
+    CONSTRAINT "RCT_RCC_PK" PRIMARY KEY ("RECIPE_CATEGORY_CODE") ENABLE, 
+    CONSTRAINT "PCT_RC_FK" FOREIGN KEY ("RECIPE_CODE")
+     REFERENCES  "RECIPE_TB" ("RECIPE_CODE") ENABLE, 
+    CONSTRAINT "RCT_CCC_FK" FOREIGN KEY ("COUNTRY_CATEGORY_CODE")
+     REFERENCES  "COUNTRY_CATEGORY_TB" ("COUNTRY_CATEGORY_CODE") ENABLE, 
+    CONSTRAINT "RCT_ICC_FK" FOREIGN KEY ("INGREDIENT_CATEGORY_CODE")
+     REFERENCES  "INGREDIENT_CATEGORY_TB" ("INGREDIENT_CATEGORY_CODE") ENABLE, 
+    CONSTRAINT "RCT_KCC_FK" FOREIGN KEY ("KIND_CATEGORY_CODE")
+     REFERENCES  "KIND_CATEGORY_TB" ("KIND_CATEGORY_CODE") ENABLE, 
+    CONSTRAINT "RCT_SCC_FK" FOREIGN KEY ("SITUATION_CATEGORY_CODE")
+     REFERENCES  "SITUATION_CATEGORY_TB" ("SITUATION_CATEGORY_CODE") ENABLE, 
+    CONSTRAINT "RCT_MCC_FK" FOREIGN KEY ("METHOD_CATEGORY_CODE")
+     REFERENCES  "METHOD_CATEGORY_TB" ("METHOD_CATEGORY_CODE") ENABLE
+   )
+/
+CREATE TABLE  "SCRAP_TB" 
+   (   "SCRAP_CODE" VARCHAR2(100) NOT NULL ENABLE, 
+   "USER_CODE" VARCHAR2(100) NOT NULL ENABLE, 
+   "POST_CODE" VARCHAR2(100) NOT NULL ENABLE, 
+   "SCRAP_DATE" DATE NOT NULL ENABLE, 
+    CONSTRAINT "SCRAP_TB_SCRAP_CODE_PK" PRIMARY KEY ("SCRAP_CODE") ENABLE, 
+    CONSTRAINT "SCRAP_TB_USER_CODE_FK" FOREIGN KEY ("USER_CODE")
+     REFERENCES  "USER_TB" ("USER_CODE") ENABLE, 
+    CONSTRAINT "SCRAP_TB_POST_CODE_FK" FOREIGN KEY ("POST_CODE")
+     REFERENCES  "POST_TB" ("POST_CODE") ENABLE
+   )
+/
+CREATE TABLE  "SNS_FRIEND_TB" 
+   (   "SNS_FRIEND_CODE" VARCHAR2(100) NOT NULL ENABLE, 
+   "USER_CODE" VARCHAR2(100), 
+   "FRIEND_USER_CODE" VARCHAR2(100), 
+    CONSTRAINT "SNS_FRIEND_TB_PK" PRIMARY KEY ("SNS_FRIEND_CODE") ENABLE, 
+    CONSTRAINT "SNS_FRIEND_TB_USER_CODE_FK" FOREIGN KEY ("USER_CODE")
+     REFERENCES  "USER_TB" ("USER_CODE") ENABLE, 
+    CONSTRAINT "SNS_FRIEND_TB_USER_CODE_FK2" FOREIGN KEY ("FRIEND_USER_CODE")
+     REFERENCES  "USER_TB" ("USER_CODE") ENABLE
+   )
+/
+CREATE TABLE  "VIDEO_CATEGORY_TB" 
+   (   "VIDEO_CATEGORY_CODE" VARCHAR2(100) NOT NULL ENABLE, 
+   "VIDEO_CATEGORY_NAME" VARCHAR2(100) NOT NULL ENABLE, 
+    CONSTRAINT "VIDEO_CATEGORY_CODE_PK" PRIMARY KEY ("VIDEO_CATEGORY_CODE") ENABLE
+   )
+/
+CREATE TABLE  "VIDEO_RECIPE_TB" 
+   (   "VIDEO_RECIPE_CODE" VARCHAR2(100) NOT NULL ENABLE, 
+   "VIDEO_NAME" VARCHAR2(100), 
+   "VIDEO_URL" VARCHAR2(100), 
+   "RECIPE_CODE" VARCHAR2(100) NOT NULL ENABLE, 
+   "VIDEO_CATEGORY_CODE" VARCHAR2(100) NOT NULL ENABLE, 
+    CONSTRAINT "VIDEO_RECIPE_VIDEO_CODE_PK" PRIMARY KEY ("VIDEO_RECIPE_CODE") ENABLE, 
+    CONSTRAINT "VIDEO_RECIPE_RECIPE_CODE_FK" FOREIGN KEY ("RECIPE_CODE")
+     REFERENCES  "RECIPE_TB" ("RECIPE_CODE") ENABLE, 
+    CONSTRAINT "VIDEO_CATEGORY_CODE_FK" FOREIGN KEY ("VIDEO_CATEGORY_CODE")
+     REFERENCES  "VIDEO_CATEGORY_TB" ("VIDEO_CATEGORY_CODE") ENABLE
+   )
+/
+CREATE OR REPLACE FORCE VIEW  "CART_VIEW" ("CART_CODE", "COMPLETE_IMAGE", "INGREDIENT_CODE", "USER_CODE", "RECIPE_CODE", "RECIPE_NAME", "INGREDIENT_NAME", "INGREDIENT_AMOUNT", "INGREDIENT_UNIT_CODE", "INGREDIENT_UNIT_NAME") AS 
+  select c.cart_code, r.complete_image, i.ingredient_code, c.user_code, r.recipe_code, r.recipe_name, i.ingredient_name, i.ingredient_amount, t.ingredient_unit_code, t.ingredient_unit_name
+from cart_tb c, ingredient_tb i, recipe_tb r, ingredient_unit_category_tb t
+where i.ingredient_code=c.ingredient_code and i.recipe_code=r.recipe_code and i.ingredient_unit_code=t.ingredient_unit_code
+/
+CREATE OR REPLACE FORCE VIEW  "COMMENT_VIEW" ("COMMENT_CODE", "COMMENT_USER_CODE", "USER_NAME", "USER_IMAGE", "COMMENT_CONTENTS", "COMMENT_DATE", "POST_CODE", "RECIPE_CODE") AS 
+  SELECT c.comment_code,c.comment_user_code,u.user_name,u.user_image,c.comment_contents,c.comment_date,c.post_code,r.recipe_code
+from comment_tb c
+join user_tb u
+on c.comment_user_code=u.user_code
+join post_tb p
+on p.post_code = c.post_code
+join recipe_tb r
+on r.recipe_code=p.recipe_code
+/
+CREATE OR REPLACE FORCE VIEW  "FLOOK_RECIPE_VIEW" ("POST_CODE", "RECIPE_CODE", "COMPLETE_IMAGE", "RECIPE_DESCRIPTION", "PERSON_NUMBER", "COOKING_TIME", "COOKING_LEVEL", "RECIPE_NAME", "LIKE_COUNT", "POST_HITS", "POST_HASH_TAG") AS 
+  select p.post_code,r.recipe_code,r.complete_image,r.recipe_description,r.person_number,r.cooking_time,r.cooking_level,r.recipe_name,p.like_count,p.post_hits,p.post_hash_tag
+from recipe_tb r
+join post_tb p
+on r.recipe_code=p.recipe_code
+/
+CREATE OR REPLACE FORCE VIEW  "FOLLOWER_VIEW" ("FOLLOW_CODE", "USER_CODE", "FOLLOW_USER_CODE", "USER_NAME", "USER_IMAGE") AS 
+  select f.follow_code, f.user_code, f.follow_user_code, u.user_name, u.user_image
+from user_tb u, follow_tb f
+where u.user_code = f.follow_user_code
+/
+CREATE OR REPLACE FORCE VIEW  "FOLLOWING_VIEW" ("USER_CODE", "FOLLOW_CODE", "FOLLOW_USER_CODE", "USER_NAME", "USER_IMAGE") AS 
+  select f.user_code, f.follow_code, f.follow_user_code, u.user_name, u.user_image
+from user_tb u, follow_tb f
+where u.user_code = f.user_code
+/
+CREATE OR REPLACE FORCE VIEW  "FOLLOW_COMMENT_RECIPE_VIEW" ("USER_CODE", "FOLLOW_USER_CODE", "FOLLOW_CODE", "COMMENT_CODE", "COMMENT_DATE", "POST_CODE", "RECIPE_CODE", "LIKE_COUNT", "POST_HITS", "COMPLETE_IMAGE", "RECIPE_NAME", "RECIPE_DESCRIPTION") AS 
+  select f.user_code, f.follow_user_code, f.follow_code, c.comment_code, c.comment_date, p.post_code, r.recipe_code, p.like_count, p.post_hits, r.complete_image, r.recipe_name, r.recipe_description
+from recipe_tb r, follow_tb f, comment_tb c, post_tb p
+where c.comment_user_code=f.follow_user_code and c.post_code=p.post_code and p.recipe_code=r.recipe_code
+/
+CREATE OR REPLACE FORCE VIEW  "FOLLOW_LIKE_RECIPE_VIEW" ("USER_CODE", "FOLLOW_USER_CODE", "FOLLOW_CODE", "NICENESS_CODE", "POST_CODE", "NICENESS_DATE", "LIKE_COUNT", "POST_HITS", "COMPLETE_IMAGE", "RECIPE_NAME", "RECIPE_DESCRIPTION", "USER_NAME", "USER_IMAGE") AS 
+  select f.user_code, f.follow_user_code, f.follow_code, n.niceness_code, p.post_code, n.niceness_date, p.like_count, p.post_hits, r.complete_image, r.recipe_name, r.recipe_description, u.user_name, u.user_image
+from post_tb p, follow_tb f, niceness_tb n, recipe_tb r, user_tb u
+where p.recipe_code=r.recipe_code and n.post_code=p.post_code and n.niceness_user_code=f.user_code and f.user_code=u.user_code
+/
+CREATE OR REPLACE FORCE VIEW  "FOLLOW_SCRAP_VIEW" ("USER_CODE", "FOLLOW_USER_CODE", "FOLLOW_CODE", "SCRAP_CODE", "POST_CODE", "SCRAP_DATE", "RECIPE_CODE", "LIKE_COUNT", "POST_HITS", "COMPLETE_IMAGE", "RECIPE_NAME", "RECIPE_DESCRIPTION") AS 
+  select f.user_code, f.follow_user_code, f.follow_code, s.scrap_code, s.post_code, s.scrap_date, p.recipe_code, p.like_count, p.post_hits, r.complete_image, r.recipe_name, r.recipe_description
+from follow_tb f, scrap_tb s, post_tb p, recipe_tb r
+where s.user_code=f.follow_user_code and s.post_code=p.post_code and p.recipe_code=r.recipe_code
+/
+CREATE OR REPLACE FORCE VIEW  "FOLLOW_VIEW" ("FOLLOW_CODE", "USER_CODE", "USER_NAME", "USER_IMAGE", "FOLLOW_USER_CODE", "FOLLOW_USER_NAME", "FOLLOW_USER_IMAGE") AS 
+  SELECT fb.follow_code follow_code,ub.user_code user_code, ub.user_name user_name, ub.user_image user_image,ub2.user_code follow_user_code, ub2.user_name  follow_user_name,
+ub2.user_image follow_user_image
+FROM follow_tb fb,user_tb ub,user_tb ub2
+where fb.follow_user_code=ub.user_code AND fb.user_code=ub2.user_code
+/
+CREATE OR REPLACE FORCE VIEW  "FOLLOW_WRITTEN_RECIPE_VIEW" ("FOLLOW_CODE", "USER_CODE", "FOLLOW_USER_CODE", "POST_CODE", "RECIPE_CODE", "LIKE_COUNT", "POST_HITS", "POST_DATE", "COMPLETE_IMAGE", "RECIPE_NAME", "RECIPE_DESCRIPTION") AS 
+  select
+f.follow_code , u.user_code, f.follow_user_code , p.post_code , r.recipe_code , p.like_count , p.post_hits,p.post_date,r.complete_image,r.recipe_name,r.recipe_description
+from
+user_tb u
+join follow_tb f
+on f.user_code = u.user_code AND f.follow_user_code = u.user_code
+join post_tb p
+on f.follow_user_code = p.user_code
+join recipe_tb r
+on r.recipe_code = p.post_code
+/
+CREATE OR REPLACE FORCE VIEW  "INGREDIENT_VIEW" ("INGREDIENT_CODE", "RECIPE_CODE", "INGREDIENT_NAME", "INGREDIENT_AMOUNT", "INGREDIENT_TYPE", "INGREDIENT_UNIT_NAME") AS 
+  SELECT ic.ingredient_code,ic.recipe_code,ic.ingredient_name,ic.ingredient_amount,ic.ingredient_type,iu.ingredient_unit_name
+FROM ingredient_tb ic,ingredient_unit_category_tb iu
+WHERE ic.ingredient_unit_code=iu.ingredient_unit_code
+/
+CREATE OR REPLACE FORCE VIEW  "MY_COUNTRY_PREFERENCE_VIEW" ("USER_CODE", "COUNTRY_CATEGORY_CODE", "COUNTRY_CATEGORY_NAME", "SCORE_TOTAL") AS 
+  select user_code ,cct.country_CATEGORY_CODE,cct.country_CATEGORY_NAME, sum(preference_Score) score_total
+from preference_tb pt,recipe_category_tb rct, country_category_tb cct
+where pt.recipe_code=rct.recipe_code AND rct.country_CATEGORY_CODE=cct.country_CATEGORY_CODE
+group by user_code,cct.country_CATEGORY_CODE,cct.country_CATEGORY_NAME
+/
+CREATE OR REPLACE FORCE VIEW  "MY_INGREDIENT_PREFERENCE_VIEW" ("USER_CODE", "INGREDIENT_CATEGORY_CODE", "INGREDIENT_CATEGORY_NAME", "SCORE_TOTAL") AS 
+  select user_code ,ict.INGREDIENT_CATEGORY_CODE,ict.INGREDIENT_CATEGORY_NAME, sum(preference_Score) score_total
+from preference_tb pt,recipe_category_tb rct, ingredient_category_tb ict
+where pt.recipe_code=rct.recipe_code AND rct.INGREDIENT_CATEGORY_CODE=ict.INGREDIENT_CATEGORY_CODE
+group by user_code,ict.INGREDIENT_CATEGORY_CODE,ict.INGREDIENT_CATEGORY_NAME
+/
+CREATE OR REPLACE FORCE VIEW  "MY_KIND_PREFERENCE_VIEW" ("USER_CODE", "KIND_CATEGORY_CODE", "KIND_CATEGORY_NAME", "SCORE_TOTAL") AS 
+  select user_code ,kct.KIND_CATEGORY_CODE,kct.KIND_CATEGORY_NAME, sum(preference_Score) score_total
+from preference_tb pt,recipe_category_tb rct, kind_category_tb kct
+where pt.recipe_code=rct.recipe_code AND rct.KIND_CATEGORY_CODE=kct.KIND_CATEGORY_CODE
+group by user_code,kct.KIND_CATEGORY_CODE,kct.KIND_CATEGORY_NAME
+/
+CREATE OR REPLACE FORCE VIEW  "MY_METHOD_PREFERENCE_VIEW" ("USER_CODE", "METHOD_CATEGORY_CODE", "METHOD_CATEGORY_NAME", "SCORE_TOTAL") AS 
+  select user_code ,mct.METHOD_CATEGORY_CODE,mct.METHOD_CATEGORY_NAME, sum(preference_Score) score_total
+from preference_tb pt,recipe_category_tb rct, method_category_tb mct
+where pt.recipe_code=rct.recipe_code AND rct.METHOD_CATEGORY_CODE=mct.METHOD_CATEGORY_CODE
+group by user_code,mct.METHOD_CATEGORY_CODE,mct.METHOD_CATEGORY_NAME
+/
+CREATE OR REPLACE FORCE VIEW  "MY_SITUATION_PREFERENCE_VIEW" ("USER_CODE", "SITUATION_CATEGORY_CODE", "SITUATION_CATEGORY_NAME", "SCORE_TOTAL") AS 
+  select user_code ,sct.situation_CATEGORY_CODE,sct.situation_CATEGORY_NAME, sum(preference_Score) score_total
+from preference_tb pt,recipe_category_tb rct, situation_category_tb sct
+where pt.recipe_code=rct.recipe_code AND rct.situation_CATEGORY_CODE=sct.situation_CATEGORY_CODE
+group by user_code,sct.situation_CATEGORY_CODE,sct.situation_CATEGORY_NAME
+/
+CREATE OR REPLACE FORCE VIEW  "NEWSFEED_LATEST_ORDER_VIEW" ("POST_CODE", "RECIPE_CODE", "LIKE_COUNT", "USER_CODE", "POST_HITS", "POST_DATE", "COMPLETE_IMAGE", "RECIPE_NAME", "USER_NAME", "USER_IMAGE", "RECIPE_DESCRIPTION") AS 
+  select p.post_code, p.recipe_code, p.like_count, u.user_code, p.post_hits, p.post_date, r.complete_image, r.recipe_name, u.user_name, u.user_image, r.recipe_description
+from user_tb u, post_tb p, recipe_tb r
+where p.recipe_code = r.recipe_code and p.user_code = u.user_code
+/
+CREATE OR REPLACE FORCE VIEW  "POST_NICENESS_OUTLINE_VIEW" ("POST_CODE", "LIKE_COUNT") AS 
+  select post_code,like_count
+from(
+select nb.post_code, count(*) like_count
+from post_tb pt, niceness_tb nb where pt.post_code=nb.post_code
+group by nb.post_code
+)
+/
+CREATE OR REPLACE FORCE VIEW  "PROFILE_LIKENESSOUTLINE_VIEW" ("POST_CODE", "LIKE_COUNT") AS 
+  select "POST_CODE","LIKE_COUNT"
+from(
+select nb.post_code, count(*) like_count
+from post_tb pt, niceness_tb nb where pt.post_code=nb.post_code
+group by nb.post_code
+)
+/
+CREATE OR REPLACE FORCE VIEW  "PROFILE_NICENESS_COUNT_VIEW" ("USER_CODE", "LIKE_COUNT") AS 
+  select user_code , like_count
+from (
+SELECT pt.user_code, COUNT(*) like_count
+from post_tb pt, niceness_tb nb 
+where pt.post_code=nb.post_code
+group by pt.user_code
+)
+/
+CREATE OR REPLACE FORCE VIEW  "PROFILE_WRITEOUTLINE_VIEW" ("USER_CODE", "LIKE_COUNT") AS 
+  select pt.user_code , count(*) like_count
+from post_tb pt, niceness_tb nb 
+where pt.post_code=nb.post_code
+group by pt.user_code
+/
+CREATE OR REPLACE FORCE VIEW  "PROFILE_WRITE_OUTLINE_VIEW" ("USER_CODE", "WRITE_COUNT") AS 
+  select user_code, write_count
+from(
+select pt.user_code , count(*) write_count
+from post_tb pt, niceness_tb nb where pt.post_code=nb.post_code
+group by pt.user_code
+)
+/
+CREATE OR REPLACE FORCE VIEW  "RECIPE_CATEGORY_VIEW" ("RECIPE_CODE", "COUNTRY_CATEGORY_NAME", "INGREDIENT_CATEGORY_NAME", "KIND_CATEGORY_NAME", "SITUATION_CATEGORY_NAME", "METHOD_CATEGORY_NAME") AS 
+  SELECT rc.recipe_code,cc.country_category_name,ic.ingredient_category_name,kc.kind_category_name,sc.situation_category_name,mc.method_category_name
+FROM
+recipe_category_tb rc,country_category_tb cc,
+ingredient_category_tb ic,
+kind_category_tb kc,
+situation_category_tb sc,
+method_category_tb mc
+WHERE
+rc.country_category_code=cc.country_category_code AND
+rc.ingredient_category_code=ic.ingredient_category_code AND
+rc.kind_category_code=kc.kind_category_code AND
+rc.situation_category_code=sc.situation_category_code AND
+rc.method_category_code=mc.method_category_code
+/
+CREATE OR REPLACE FORCE VIEW  "SCRAP_EVENT_VIEW" ("SCRAP_CODE", "RECIPE_CODE", "USER_CODE", "POST_CODE", "SCRAP_DATE", "COMPLETE_IMAGE", "RECIPE_NAME", "RECIPE_DESCRIPTION", "USER_IMAGE") AS 
+  select
+s.scrap_code,r.recipe_code,u.user_code,p.post_code,s.scrap_date,r.complete_image,r.recipe_name,r.recipe_description,u.user_image
+from post_tb p
+join recipe_tb r
+on r.recipe_code=p.recipe_code
+join user_tb u
+on u.user_code = p.user_code
+join scrap_tb s
+on s.post_code=p.post_code
+/
+CREATE OR REPLACE FORCE VIEW  "SCRAP_VIEW" ("SCRAP_CODE", "POST_CODE", "RECIPE_CODE", "USER_CODE", "USER_NAME", "COMPLETE_IMAGE", "RECIPE_NAME", "RECIPE_DESCRIPTION", "LIKE_COUNT", "POST_HITS", "SCRAP_DATE") AS 
+  select s.scrap_code,p.post_code,r.recipe_code,u.user_code,u.user_name,r.complete_image,r.recipe_name,r.recipe_description,p.like_count,p.post_hits,s.scrap_date
+from user_tb u, post_tb p, recipe_tb r, scrap_tb s
+where p.post_code=s.post_code and s.user_code=u.user_code and p.recipe_code=r.recipe_code
+/
+CREATE OR REPLACE FORCE VIEW  "SIMPLE_RECIPE_VIEW" ("RECIPE_CODE", "POST_CODE", "COMPLETE_IMAGE", "RECIPE_NAME", "RECIPE_DESCRIPTION", "LIKE_COUNT", "POST_HITS", "COUNTRY_CATEGORY_NAME", "INGREDIENT_CATEGORY_NAME", "KIND_CATEGORY_NAME", "SITUATION_CATEGORY_NAME", "METHOD_CATEGORY_NAME") AS 
+  select r.recipe_code,p.post_code,r.complete_image,r.recipe_name,r.recipe_description,p.like_count,p.post_hits,cct.country_category_name,ict.ingredient_category_name,kct.kind_category_name,sct.situation_category_name,mct.method_category_name
+FROM recipe_tb r,post_tb p,recipe_category_tb rc,country_category_tb cct,ingredient_category_tb ict,kind_category_tb kct,situation_category_tb sct,method_category_tb mct
+WHERE p.recipe_code=r.recipe_code
+AND r.recipe_code=rc.recipe_code
+AND rc.country_category_code=cct.country_category_code
+AND rc.ingredient_category_code =ict.ingredient_category_code
+AND rc.kind_category_code=kct.kind_category_code
+AND rc.situation_category_code=sct.situation_category_code
+AND rc.method_category_code=mct.method_category_code
+/
+CREATE OR REPLACE FORCE VIEW  "SIMPLE_USER_RECIPE_VIEW" ("POST_CODE", "RECIPE_CODE", "USER_CODE", "USER_NAME", "COMPLETE_IMAGE", "RECIPE_NAME", "RECIPE_DESCRIPTION", "LIKE_COUNT", "POST_HITS", "COUNTRY_CATEGORY_NAME", "INGREDIENT_CATEGORY_NAME", "KIND_CATEGORY_NAME", "SITUATION_CATEGORY_NAME", "METHOD_CATEGORY_NAME") AS 
+  SELECT p.post_code,r.recipe_code,u.user_code,u.user_name,r.complete_image,r.recipe_name,r.recipe_description,p.like_count,p.post_hits,cct.country_category_name,ict.ingredient_category_name,kct.kind_category_name,sct.situation_category_name,mct.method_category_name
+FROM post_tb p,recipe_tb r,user_tb u,recipe_category_tb rc,country_category_tb cct,ingredient_category_tb ict,kind_category_tb kct,situation_category_tb sct,method_category_tb mct
+WHERE p.recipe_code=r.recipe_code
+AND p.user_code=u.user_code
+AND r.recipe_code=rc.recipe_code
+AND rc.country_category_code=cct.country_category_code
+AND rc.ingredient_category_code =ict.ingredient_category_code
+AND rc.kind_category_code=kct.kind_category_code
+AND rc.situation_category_code=sct.situation_category_code
+AND rc.method_category_code=mct.method_category_code
+/
+CREATE OR REPLACE FORCE VIEW  "SIMPLE_VIDEO_RECIPE_VIEW" ("POST_CODE", "VIDEO_RECIPE_CODE", "VIDEO_NAME", "VIDEO_URL", "RECIPE_CODE", "COMPLETE_IMAGE", "RECIPE_NAME", "RECIPE_DESCRIPTION", "LIKE_COUNT", "POST_HITS", "POST_DATE", "VIDEO_CATEGORY_CODE", "VIDEO_CATEGORY_NAME") AS 
+  select p.post_code, v.video_recipe_code, v.video_name, v.video_url, v.recipe_code, r.complete_image, r.recipe_name, r.recipe_description, p.like_count,p.post_hits, p.post_date, c.video_category_code, c.video_category_name
+from video_recipe_tb v, post_tb p, recipe_tb r, video_category_tb c
+where v.recipe_code = r.recipe_code and r.recipe_code=p.recipe_code and c.video_category_code=v.video_category_code
+/
+CREATE OR REPLACE FORCE VIEW  "SNS_FRIEND_VIEW" ("SNS_FRIEND_CODE", "USER_CODE", "FRIEND_USER_CODE", "USER_NAME", "USER_IMAGE", "USER_BIRTHDAY", "FOLLOW_USER_CODE", "FOLLOW_CODE") AS 
+  select s.sns_friend_code, s.user_code, s.friend_user_code, u.user_name, u.user_image, u.user_birthday, f.follow_user_code, f.follow_code
+from sns_friend_tb s, user_tb u, follow_tb f
+where (u.user_code = s.user_code and s.user_code=f.user_code) or
+(u.user_code=s.user_code )
+/
+CREATE OR REPLACE FORCE VIEW  "USER_RECIPE_VIEW" ("POST_CODE", "RECIPE_CODE", "USER_CODE", "COMPLETE_IMAGE", "RECIPE_NAME", "RECIPE_DESCRIPTION", "PERSON_NUMBER", "COOKING_TIME", "COOKING_LEVEL", "LIKE_COUNT", "POST_HITS", "POST_HASH_TAG", "USER_NAME", "USER_IMAGE") AS 
+  SELECT p.post_code,r.recipe_code,u.user_code,r.complete_image,r.recipe_name,r.recipe_description,r.person_number,r.cooking_time,r.cooking_level,p.like_count,p.post_hits,p.post_hash_tag,u.user_name,u.user_image
+FROM post_tb p,recipe_tb r,user_tb u
+WHERE p.recipe_code=r.recipe_code AND p.user_code=u.user_code
+/
+CREATE OR REPLACE FORCE VIEW  "VIDEO_RECIPE_VIEW" ("POST_CODE", "RECIPE_CODE", "VIDEO_RECIPE_CODE", "VIDEO_NAME", "COMPLETE_IMAGE", "RECIPE_NAME", "RECIPE_DESCRIPTION", "PERSON_NUMBER", "COOKING_TIME", "COOKING_LEVEL", "VIDEO_URL", "LIKE_COUNT", "POST_HITS", "POST_HASH_TAG") AS 
+  select p.post_code,r.recipe_code,v.video_recipe_code,v.video_name,r.complete_image,r.recipe_name,r.recipe_description,r.person_number,r.cooking_time,r.cooking_level,v.video_url,p.like_count,p.post_hits,p.post_hash_tag
+from post_tb p
+join recipe_tb r
+on p.recipe_code=r.recipe_code
+join video_recipe_tb v
+on r.recipe_code=v.recipe_code
+/
+
+insert into ingredient_unit_category_tb values('IUC001', 'g');
+insert into ingredient_unit_category_tb values('IUC002', 'ml');
+insert into ingredient_unit_category_tb values('IUC003', '개');
+insert into ingredient_unit_category_tb values('IUC004', '종이컵');
+insert into ingredient_unit_category_tb values('IUC005', '숟가락');
+insert into ingredient_unit_category_tb values('IUC006', '줌');
+
+insert into ingredient_category_tb values('ICT000','재료별');
+insert into ingredient_category_tb values('ICT001','육류');
+insert into ingredient_category_tb values('ICT002','해물류/건어물류');
+insert into ingredient_category_tb values('ICT003','곡류');
+insert into ingredient_category_tb values('ICT004','콩/견과류');
+insert into ingredient_category_tb values('ICT005','채소류');
+insert into ingredient_category_tb values('ICT006','버섯류');
+insert into ingredient_category_tb values('ICT007','빵류');
+insert into ingredient_category_tb values('ICT008','가공식품류');
+insert into ingredient_category_tb values('ICT009','면류/떡류');
+insert into ingredient_category_tb values('ICT010','과일류');
+insert into ingredient_category_tb values('ICT011','달걀/유제품');
+insert into ingredient_category_tb values('ICT012','기타');
+
+insert into country_category_tb values('CCT000','나라별');
+insert into country_category_tb values('CCT001','한식');
+insert into country_category_tb values('CCT002','양식');
+insert into country_category_tb values('CCT003','일식');
+insert into country_category_tb values('CCT004','중식');
+insert into country_category_tb values('CCT005','기타');
+
+insert into kind_category_tb values('KCT000','종류별');
+insert into kind_category_tb values('KCT001','밥/죽');
+insert into kind_category_tb values('KCT002','면/만두');
+insert into kind_category_tb values('KCT003','국/탕/찌개');
+insert into kind_category_tb values('KCT004','김치/밑반찬');
+insert into kind_category_tb values('KCT005','샐러드/스프');
+insert into kind_category_tb values('KCT006','양념/소스/잼');
+insert into kind_category_tb values('KCT007','차/음료');
+insert into kind_category_tb values('KCT008','베이킹/떡');
+insert into kind_category_tb values('KCT009','도시락/간식/디저트');
+insert into kind_category_tb values('KCT010','튀김');
+insert into kind_category_tb values('KCT011','기타');
+
+insert into situation_category_tb values('SCT000','상황별');
+insert into situation_category_tb values('SCT001','일상');
+insert into situation_category_tb values('SCT002','손님접대');
+insert into situation_category_tb values('SCT003','이유식');
+insert into situation_category_tb values('SCT004','나들이');
+insert into situation_category_tb values('SCT005','간식');
+insert into situation_category_tb values('SCT006','초스피드');
+insert into situation_category_tb values('SCT007','술안주');
+insert into situation_category_tb values('SCT008','푸드 스타일링');
+insert into situation_category_tb values('SCT009','다이어트쿡');
+insert into situation_category_tb values('SCT010','영양식');
+insert into situation_category_tb values('SCT011','명절');
+insert into situation_category_tb values('SCT012','야식');
+insert into situation_category_tb values('SCT013','해장');
+insert into situation_category_tb values('SCT014','아침식사');
+insert into situation_category_tb values('SCT015','채식');
+insert into situation_category_tb values('SCT016','야식');
+insert into situation_category_tb values('SCT017','데이트');
+
+insert into method_category_tb values('MCT000','방법별');
+insert into method_category_tb values('MCT001','끓이기');
+insert into method_category_tb values('MCT002','볶음');
+insert into method_category_tb values('MCT003','부침');
+insert into method_category_tb values('MCT004','찜');
+insert into method_category_tb values('MCT005','튀김');
+insert into method_category_tb values('MCT006','절이기');
+insert into method_category_tb values('MCT007','구이');
+insert into method_category_tb values('MCT008','조림');
+insert into method_category_tb values('MCT009','회');
+insert into method_category_tb values('MCT010','삶기');
+insert into method_category_tb values('MCT011','데치기');
+insert into method_category_tb values('MCT012','무침');
+insert into method_category_tb values('MCT013','비빔');
+insert into method_category_tb values('MCT014','굽기');
+insert into method_category_tb values('MCT015','기타');
+
+insert into video_category_tb values('VCT001','냉장고를 부탁해');
+insert into video_category_tb values('VCT002','삼시세끼');
+insert into video_category_tb values('VCT003','테이스티로드');
+insert into video_category_tb values('VCT004','올리브 쿡');
+insert into video_category_tb values('VCT005','올리브쇼2015');
+insert into video_category_tb values('VCT006','한식대첩3');

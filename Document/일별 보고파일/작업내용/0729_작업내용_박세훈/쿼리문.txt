@@ -1,0 +1,82 @@
+create table user_tb (user_code varchar2(100) not null constraints user_tb_pk primary key,user_name varchar2(20) not null, user_email varchar2(320) not null, user_password varchar2(60) not null,user_sex varchar2(20) not null,user_birthday date not null);
+
+CREATE TABLE recipe_tb(
+recipe_code VARCHAR2(100) NOT NULL CONSTRAINT recipe_tb_recipe_code_pk PRIMARY KEY,
+recipe_name varchar2(100) not null,
+complete_image VARCHAR2(2000) NOT NULL,
+recipe_description VARCHAR2(2000) NULL,
+person_number NUMBER NOT NULL,
+cooking_time VARCHAR2(100) NOT NULL,
+cooking_level VARCHAR2(100) NOT NULL
+)
+
+---------video_recipe_tb 抛捞喉 积己------------------------------------------------------
+CREATE TABLE video_recipe_tb(
+video_recipe_code VARCHAR2(100) NOT NULL CONSTRAINT video_recipe_video_code_pk PRIMARY KEY,
+video_name VARCHAR2(100) NULL,
+video_url VARCHAR2(100) NULL,
+recipe_code VARCHAR2(100) NOT NULL CONSTRAINT video_recipe_recipe_code_fk REFERENCES recipe_tb (recipe_code));
+------------------------------------------------------------------------------
+
+
+
+----------post_tb 抛捞喉 积己--------------------------------------------------------------
+create table post_tb (post_code varchar2(100) not null, recipe_code varchar2(100) not null
+,constraints post_tb_recipe_code_fk foreign key (recipe_code) references recipe_tb(recipe_code)
+,user_code varchar2(100) not null,constraints post_tb_user_code_fk foreign key (user_code) references user_tb(user_code)
+,like_count NUMBER not null,post_hits number not null, post_hash_tag varchar2(1000) null);
+-------------------------------------------------------------------------------
+
+
+----------simple_recipe_view 轰 积己-------------------------------------------------
+create view simple_recipe_view
+as
+select r.recipe_code,p.post_code,r.complete_image,r.recipe_name,r.recipe_description,p.like_count,p.post_hits
+from recipe_tb r
+join post_tb p
+on r.recipe_code=p.recipe_code
+------------------------------------------------------------------------------
+
+
+--------flook_recipe_view 轰 积己-----------------------------------------------------
+create view flook_recipe_view
+as
+select p.post_code,r.recipe_code,r.complete_image,r.recipe_description,r.person_number,r.cooking_time,r.cooking_level
+,r.recipe_name,p.like_count,p.post_hits,p.post_hash_tag
+from recipe_tb r
+join post_tb p
+on r.recipe_code=p.recipe_code;
+------------------------------------------------------------------------------
+
+
+-------video_recipe_view 轰 积己------------------------------------------------------
+create view video_recipe_view
+as
+select p.post_code,r.recipe_code,v.video_recipe_code,v.video_name,r.complete_image,r.recipe_name,r.recipe_description
+,r.person_number,r.cooking_time,r.cooking_level,v.video_url,p.like_count,p.post_hits,p.post_hash_tag
+from post_tb p
+join recipe_tb r
+on p.recipe_code=r.recipe_code
+join video_recipe_tb v
+on r.recipe_code=v.recipe_code;
+------------------------------------------------------------------------------
+
+
+--------simple_video_recipe_view 轰 积己----------------------------------------------
+create  view simple_video_recipe_view
+as
+select p.post_code,v.video_recipe_code,v.video_name,v.video_url,r.recipe_code,r.complete_image,r.recipe_name
+,r.recipe_description,p.like_count,p.post_hits
+from video_recipe_tb v
+join recipe_tb r
+on r.recipe_code=v.recipe_code
+join post_tb p
+on p.recipe_code=r.recipe_code;
+------------------------------------------------------------------------------
+
+select *
+from user_constraints;
+
+
+
+drop table recipe_tb;

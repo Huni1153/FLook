@@ -1,0 +1,595 @@
+package DAO;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+import Calculate.CalculateCode;
+import VO.RecipeVO;
+import Connection.DBConnection;
+
+public class RecipeDAO {
+	private DBConnection dbConnection; 
+	private static RecipeDAO dao;
+	private static int codeNum=1;
+	private static final String codeType="0101UR";
+	static{
+		dao=new RecipeDAO();
+	}
+	public static RecipeDAO getInstance()
+	{
+		return dao;
+	}
+	private RecipeDAO() { 
+		dbConnection = DBConnection.getInstance();
+	} 
+	public DBConnection getDbConnection() {
+		return dbConnection;
+	}
+	public void setDbConnection(DBConnection dbConnection) {
+		this.dbConnection = dbConnection;
+	} 
+	public String insertRecipe(RecipeVO recipeVO)
+	{
+		String recipeCode=recipeVO.getRecipeCode();
+		String completeImage=recipeVO.getCompleteImage();
+		String recipeName=recipeVO.getRecipeName();
+		String recipeDescription=recipeVO.getRecipeDescription();
+		int personNumber=recipeVO.getPersonNumber();
+		String cookingTime=recipeVO.getCookingTime();
+		String cookingLevel=recipeVO.getCookingLevel();
+		if(recipeCode!=null)
+		{
+			return this.insertRecipe(recipeCode, completeImage, recipeName, recipeDescription, personNumber, cookingTime, cookingLevel);
+		}
+		else
+		{
+			return this.insertRecipe(completeImage, recipeName, recipeDescription, personNumber, cookingTime, cookingLevel);
+		}
+	}
+	public String insertRecipe(String completeImage,String recipeName,String recipeDescription,int personNumber,String cookingTime,String cookingLevel)
+	{
+		PreparedStatement pstmt=null;
+		String recipeCode=CalculateCode.makeCode(codeType, codeNum);
+		
+		int row = 0; 
+		try
+		{
+			String sql = "INSERT INTO recipe_tb VALUES(?,?,?,?,?,?,?)";
+			Connection conn = dbConnection.getConn();
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1,recipeCode);
+			pstmt.setString(2,completeImage);
+			pstmt.setString(3,recipeName);
+			pstmt.setString(4,recipeDescription);
+			pstmt.setInt(5,personNumber);
+			pstmt.setString(6,cookingTime);
+			pstmt.setString(7,cookingLevel);
+			
+			row=pstmt.executeUpdate();
+			if(row!=0)
+			{
+				conn.commit(); 
+			}
+
+		}
+		catch(SQLException se){
+			System.out.println(se.getMessage());
+		}finally{
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+			} catch (SQLException se) {
+				System.out.println(se.getMessage());
+			}
+		}   
+		if(row!=0)
+		{ 
+			codeNum++;
+			return recipeCode;
+		}			
+		return null; 	
+	}
+	public String insertRecipe(String recipeCode,String completeImage,String recipeName,String recipeDescription,int personNumber,String cookingTime,String cookingLevel)
+	{
+		PreparedStatement pstmt=null;
+		int row = 0; 
+		try
+		{
+			String sql = "INSERT INTO recipe_tb VALUES(?,?,?,?,?,?,?)";
+			Connection conn = dbConnection.getConn();
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1,recipeCode);
+			pstmt.setString(2,completeImage);
+			pstmt.setString(3,recipeName);
+			pstmt.setString(4,recipeDescription);
+			pstmt.setInt(5,personNumber);
+			pstmt.setString(6,cookingTime);
+			pstmt.setString(7,cookingLevel);
+			
+			row=pstmt.executeUpdate();
+			if(row!=0)
+			{
+				conn.commit(); 
+			}
+
+		}
+		catch(SQLException se){
+			System.out.println(se.getMessage());
+		}finally{
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+			} catch (SQLException se) {
+				System.out.println(se.getMessage());
+			}
+		}   
+		if(row!=0)
+		{ 
+			return recipeCode;
+		}			
+		return null; 	
+	}
+	public static void main(String[] args)
+	{
+		RecipeDAO dao=RecipeDAO.getInstance();
+		System.out.println(dao.insertRecipe( "bbb", "ccc", "ddd", 5, "eee", "fff")); 
+		System.out.println(dao.insertRecipe( "bbb", "ccc", "ddd", 5, "eee", "fff")); 
+		System.out.println(dao.insertRecipe( "bbb", "ccc", "ddd", 5, "eee", "fff")); 
+		System.out.println(dao.insertRecipe( "bbb", "ccc", "ddd", 5, "eee", "fff")); 
+		System.out.println(dao.insertRecipe( "bbb", "ccc", "ddd", 5, "eee", "fff")); 
+		System.out.println(dao.insertRecipe( "bbb", "ccc", "ddd", 5, "eee", "fff")); 
+		System.out.println(dao.insertRecipe( "bbb", "ccc", "ddd", 5, "eee", "fff")); 
+		System.out.println(dao.insertRecipe( "bbb", "ccc", "ddd", 5, "eee", "fff")); 
+		System.out.println(dao.insertRecipe( "bbb", "ccc", "ddd", 5, "eee", "fff")); 
+		System.out.println(dao.insertRecipe( "bbb", "ccc", "ddd", 5, "eee", "fff")); 
+		System.out.println(dao.insertRecipe( "bbb", "ccc", "ddd", 5, "eee", "fff")); 
+		System.out.println(dao.insertRecipe( "bbb", "ccc", "ddd", 5, "eee", "fff")); 
+		System.out.println(dao.insertRecipe( "bbb", "ccc", "ddd", 5, "eee", "fff")); 
+		System.out.println(dao.insertRecipe( "bbb", "ccc", "ddd", 5, "eee", "fff")); 
+		System.out.println(dao.insertRecipe( "bbb", "ccc", "ddd", 5, "eee", "fff")); 
+		
+		int b=100;
+		System.out.println(Integer.toString(b));
+	}
+}
+
+
+
+package DAO;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+import Calculate.CalculateCode;
+import VO.PostVO;
+import Connection.DBConnection;
+
+public class PostDAO {
+	private DBConnection dbConnection; 
+	private static int codeNum=1; 
+	private static final String codeType="0201UP";
+
+	private static PostDAO dao;
+	static{
+		dao=new PostDAO();
+	}
+
+	public static PostDAO getInstance()
+	{
+		return dao;
+	} 
+	private PostDAO() {
+		dbConnection = DBConnection.getInstance();
+	}
+	public DBConnection getDbConnection() {
+		return dbConnection;
+	}
+	public void setDbConnection(DBConnection dbConnection) {
+		this.dbConnection = dbConnection;
+	}
+
+	public String insertPost(String recipeCode,String userCode,int likeCount,int postHits,String postHashTag)
+	{
+		PreparedStatement pstmt=null;
+		String postCode=CalculateCode.makeCode(codeType, codeNum);
+		int row = 0; 
+		try
+		{
+			String sql = "INSERT INTO post_tb VALUES(?,?,?,?,?,?)";
+			Connection conn = dbConnection.getConn();
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1,postCode);
+			pstmt.setString(2,recipeCode);
+			pstmt.setString(3,userCode);
+			pstmt.setInt(4,likeCount);
+			pstmt.setInt(5,postHits);
+			pstmt.setString(6,postHashTag); 
+			
+			row=pstmt.executeUpdate();
+			if(row!=0)
+			{
+				conn.commit();
+			}
+			
+		}
+		catch(SQLException se){
+			se.printStackTrace(); 
+		}finally{
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+			} catch (SQLException se) {
+				se.printStackTrace(); 
+			}
+		}   
+		if(row!=0)
+		{
+			codeNum++;
+			return postCode;
+		}
+		return null; 	
+	}
+	public String insertPost(String postCode,String recipeCode,String userCode,int likeCount,int postHits,String postHashTag)
+	{
+		PreparedStatement pstmt=null;
+		int row = 0; 
+		try
+		{
+			String sql = "INSERT INTO post_tb VALUES(?,?,?,?,?,?)";
+			Connection conn = dbConnection.getConn();
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1,postCode);
+			pstmt.setString(2,recipeCode);
+			pstmt.setString(3,userCode);
+			pstmt.setInt(4,likeCount);
+			pstmt.setInt(5,postHits);
+			pstmt.setString(6,postHashTag); 
+			
+			row=pstmt.executeUpdate();
+			if(row!=0)
+			{
+				conn.commit();
+			}
+			
+		}
+		catch(SQLException se){
+			se.printStackTrace(); 
+		}finally{
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+			} catch (SQLException se) {
+				se.printStackTrace(); 
+			}
+		}   
+		if(row!=0)
+		{
+			return postCode; 	
+		}
+		return null;
+	}
+	public String insertPost(PostVO postVO)
+	{
+		String postCode=postVO.getPostCode();
+		String recipeCode=postVO.getRecipeCode();
+		String userCode=postVO.getUserCode();
+		int likeCount=postVO.getLikeCount();
+		int postHits=postVO.getPostHits();
+		String postHashTag=postVO.getPostHashtag();
+		if(postCode!=null)
+		{
+			return this.insertPost(postCode, recipeCode, userCode, likeCount, postHits, postHashTag); 	
+			}
+		else
+		{
+			return this.insertPost(recipeCode, userCode, likeCount, postHits, postHashTag);			
+		}
+	}
+	public static void main(String[] args)
+	{
+		PostDAO dao=PostDAO.getInstance();
+		System.out.println(dao.insertPost("a", "code3", "USER_150729_001", 1, 1, "#a"));
+	}
+}
+
+package DAO;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+import Calculate.CalculateCode;
+import Connection.DBConnection;
+import VO.PostVO;
+
+public class PostDAO {
+	private DBConnection dbConnection; 
+	private static int codeNum=1; 
+	private static final String codeType="0201UP";
+
+	private static PostDAO dao;
+	static{
+		dao=new PostDAO();
+	}
+
+	public static PostDAO getInstance()
+	{
+		return dao;
+	} 
+	private PostDAO() {
+		dbConnection = DBConnection.getInstance();
+	}
+	public DBConnection getDbConnection() {
+		return dbConnection;
+	}
+	public void setDbConnection(DBConnection dbConnection) {
+		this.dbConnection = dbConnection;
+	}
+
+	public String insertPost(String recipeCode,String userCode,int likeCount,int postHits,String postHashTag)
+	{
+		PreparedStatement pstmt=null;
+		String postCode=CalculateCode.makeCode(codeType, codeNum);
+		int row = 0; 
+		try
+		{
+			String sql = "INSERT INTO post_tb VALUES(?,?,?,?,?,?)";
+			Connection conn = dbConnection.getConn();
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1,postCode);
+			pstmt.setString(2,recipeCode);
+			pstmt.setString(3,userCode);
+			pstmt.setInt(4,likeCount);
+			pstmt.setInt(5,postHits);
+			pstmt.setString(6,postHashTag); 
+			
+			row=pstmt.executeUpdate();
+			if(row!=0)
+			{
+				conn.commit();
+			}
+			
+		}
+		catch(SQLException se){
+			se.printStackTrace(); 
+		}finally{
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+			} catch (SQLException se) {
+				se.printStackTrace(); 
+			}
+		}   
+		if(row!=0)
+		{
+			codeNum++;
+			return postCode;
+		}
+		return null; 	
+	}
+	public String insertPost(String postCode,String recipeCode,String userCode,int likeCount,int postHits,String postHashTag)
+	{
+		PreparedStatement pstmt=null;
+		int row = 0; 
+		try
+		{
+			String sql = "INSERT INTO post_tb VALUES(?,?,?,?,?,?)";
+			Connection conn = dbConnection.getConn();
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1,postCode);
+			pstmt.setString(2,recipeCode);
+			pstmt.setString(3,userCode);
+			pstmt.setInt(4,likeCount);
+			pstmt.setInt(5,postHits);
+			pstmt.setString(6,postHashTag); 
+			
+			row=pstmt.executeUpdate();
+			if(row!=0)
+			{
+				conn.commit();
+			}
+			
+		}
+		catch(SQLException se){
+			se.printStackTrace(); 
+		}finally{
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+			} catch (SQLException se) {
+				se.printStackTrace(); 
+			}
+		}   
+		if(row!=0)
+		{
+			return postCode; 	
+		}
+		return null;
+	}
+	public String insertPost(PostVO postVO)
+	{
+		String postCode=postVO.getPostCode();
+		String recipeCode=postVO.getRecipeCode();
+		String userCode=postVO.getUserCode();
+		int likeCount=postVO.getLikeCount();
+		int postHits=postVO.getPostHits();
+		String postHashTag=postVO.getPostHashtag();
+		if(postCode!=null)
+		{
+			return this.insertPost(postCode, recipeCode, userCode, likeCount, postHits, postHashTag); 	
+			}
+		else
+		{
+			System.out.println(postVO);
+			return this.insertPost(recipeCode, userCode, likeCount, postHits, postHashTag);			
+		}
+	}
+	public static void main(String[] args)
+	{
+		PostDAO dao=PostDAO.getInstance();
+		System.out.println(dao.insertPost("a", "code3", "USER_150729_001", 1, 1, "#a"));
+	}
+}
+
+package DAO;
+
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+import VO.CookingVO;
+import Calculate.CalculateCode;
+import Connection.DBConnection;
+
+public class CookingDAO {
+	private DBConnection dbConnection;
+	private static CookingDAO dao=new CookingDAO();
+	private static final String codeType="0401CK";
+	private static int codeNum=1;
+
+	private CookingDAO() {
+		dbConnection = DBConnection.getInstance();
+		// TODO Auto-generated constructor stub
+	}
+	public static CookingDAO getInstance()
+	{
+		return dao;
+	}
+
+	public CookingDAO(DBConnection connection) {
+		this.dbConnection = connection;
+	}
+
+	public DBConnection getConnection() {
+		return dbConnection;
+	}
+
+	public void setConnection(DBConnection connection) {
+		this.dbConnection = connection;
+	}
+	public String insertCooking(CookingVO cookingVO)
+	{
+		String cookingCode=cookingVO.getCookingCode();
+		String recipeCode=cookingVO.getRecipeCode();
+		int cookingSequence=cookingVO.getCookingSequence();
+		String cookingImage=cookingVO.getCookingImage();
+		String cookingCaption=cookingVO.getCookingCaption();
+		if(cookingCode!=null)
+		{
+			return insertCooking(cookingCode, recipeCode, cookingSequence, cookingImage, cookingCaption);
+		}
+		else
+		{
+			return insertCooking(recipeCode, cookingSequence, cookingImage, cookingCaption);	
+		}
+		
+	}
+
+	public String insertCooking(String recipeCode,int cookingSequence,String cookingImage,String cookingCaption){
+		int row=0;
+		PreparedStatement pstmt = null;
+		String cookingCode=CalculateCode.makeCode(codeType, codeNum);
+		try
+		{
+
+			String sql="insert into cooking_tb VALUES(?,?,?,?,?)";
+			pstmt=dbConnection.getConn().prepareStatement(sql);
+			pstmt.setString(1,cookingCode);
+			pstmt.setString(2,recipeCode);
+			pstmt.setInt(3,cookingSequence);
+			pstmt.setString(4,cookingImage);
+			pstmt.setString(5,cookingCaption);
+	
+			row=pstmt.executeUpdate();
+			if(row!=0)
+				dbConnection.getConn().commit();
+		}
+		catch (SQLException se)
+		{
+			System.out.println(se.getMessage());
+		}
+		catch(Exception ex)
+		{
+			System.out.println(ex.getMessage());
+		}
+		finally
+		{
+			try
+			{
+				if(pstmt != null) pstmt.close();
+			}
+			catch (SQLException se)
+			{
+				System.out.println(se.getMessage());
+			}
+		}
+		if(row!=0)
+		{
+			codeNum++;
+			return cookingCode;
+		}
+		return null;	
+	}
+
+	public String insertCooking(String cookingCode,String recipeCode,int cookingSequence,String cookingImage,String cookingCaption){
+		int row=0;
+		PreparedStatement pstmt = null;
+		try
+		{
+
+			String sql="insert into cooking_tb VALUES(?,?,?,?,?)";
+			pstmt=dbConnection.getConn().prepareStatement(sql);
+			pstmt.setString(1,cookingCode);
+			pstmt.setString(2,recipeCode);
+			pstmt.setInt(3,cookingSequence);
+			pstmt.setString(4,cookingImage);
+			pstmt.setString(5,cookingCaption);
+	
+			row=pstmt.executeUpdate();
+			if(row!=0)
+				dbConnection.getConn().commit();
+		}
+		catch (SQLException se)
+		{
+			System.out.println(se.getMessage());
+		}
+		catch(Exception ex)
+		{
+			System.out.println(ex.getMessage());
+		}
+		finally
+		{
+			try
+			{
+				if(pstmt != null) pstmt.close();
+			}
+			catch (SQLException se)
+			{
+				System.out.println(se.getMessage());
+			}
+		}
+		if(row!=0)
+		{
+			return cookingCode;
+		}
+		return null;	
+	}
+
+	
+	public static void main(String args[]){
+		CookingDAO dao= CookingDAO.getInstance();
+		//System.out.println(dao.insertCooking("Cooking_001", "RECIPE_001",1, "이미지2", "설명중입니다"));
+//		System.out.println(dao.deleteCooking("Cooking_001"));
+		//System.out.println(dao.updateCooking("RECIPE_002", "RECIPE_002",3, "image333", "newCaption", "cooking_001"));
+	}
+	
+}

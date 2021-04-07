@@ -1,0 +1,230 @@
+            
+                  
+   <script type="text/javascript">
+   
+
+      
+      function detailSee(recipeCode) {
+         alert(recipeCode);
+         /*alert(recipeCode);*/
+         $.ajax({
+            url : "detail",
+            type : 'POST',
+            data : {
+               "choiceRecipe" : recipeCode
+            },
+            success : function(data) {
+               $("#tempHereInsert").html(data);
+                /*alert("?"); */
+               $("#qq").trigger("click");
+               
+               $("#bookmarkBtn").click(function(){
+                  var bookmarkBtnSrc;
+                  bookmarkBtnSrc=$("#bookmarkBtn").attr("src");
+                  if(bookmarkBtnSrc==="img/main_img/Bookmark.png") {
+                     $("#bookmarkBtn").attr("src","img/main_img/unBookmark.png");
+                     $.ajax({
+                        url:"ScrapDeleteServlet",
+                        type:"POST",
+                        data:{
+                           "recipeCode" : recipeCode
+                        },
+                        success : function(data) {
+                           alert("스크랩 취소되었습니다.");
+                        }
+                     });
+                  } else {
+                     $.ajax({
+                        url:"ScrapAddServlet",
+                        type:"POST",
+                        data : {
+                           "recipeCode" : recipeCode
+                        },
+                        success : function(data) {
+                           $("#bookmarkBtn").attr("src","img/main_img/Bookmark.png");
+                           alert("스크랩되었습니다.");
+                        }
+                     }); // ajax end
+                  } // else문 end
+               });//bookmarkBtn종료.
+               $("#heart_Btn").click(function(){
+                  if($("#heart_Btn").attr("src")==="img/main_img/heart_empty.png") {
+                     $.ajax({
+                        url : 'like',
+                        type:"POST",
+                        data:{
+                           "recipeCode" : recipeCode,
+                           "like" : "N"
+                        },
+                        success : function(data) {
+                           alert("좋아요");
+                           $("#heart_Btn").attr("src","img/main_img/heart_fill.png");
+                        }
+                     }); // ajax종료
+                  } else {
+                     $.ajax({
+                        url:'like',
+                        type:"POST",
+                        data:{
+                           "recipeCode":recipeCode,
+                           "like" : "Y"
+                        },
+                        success : function(data) {
+                           alert("좋아요취소");
+                           $("#heart_Btn").attr("src","img/main_img/heart_empty.png");
+                        }
+                        
+                     });//ajax종료
+                  }//else종료
+
+               });
+            }
+         });
+      }      
+      
+      
+      
+      
+   
+   </script>               
+   <button type="button" class="btn btn-info btn-lg" data-toggle="modal"
+      data-target="#detailRecipeModal" id="qq" style="display: none;">이거
+      봤니?이게 보여?보이면 안되는데;;</button>               
+                  
+                  
+                  
+                  
+                  
+                  <%-- <%
+                     for (int i = 0; i < 6; i++) {
+                  %> --%>
+                  <div class="view view-first">
+                     <img src="\Flook\userImage\da46d1f02b4c701eb1c35cfbd076100e1_m.jpg" />
+                     <div class="mask">
+                        <form method="post" action="detail" id="detail"
+                           style="display: inline">
+                           <a type="button"
+                              href="javascript:detailSee('0101UR1439022566592')">
+                              <h2>집밥백선생 오징어볶음</h2>
+                           </a>
+                        </form>
+                        <p>좋아요 : ${mySimpleRecipe.likeCount} 조회수
+                           :${mySimpleRecipe.postHits}</p>
+                        <a href="modifyRecipe.jsp" class="info">레시피수정</a>
+                        <form method="post" action="deleteMyRecipe" id="myRecipe"
+                           style="display: inline">
+                           <a type="button" id="recipeDeleteBtn" class="info"
+                              href="javascript:myRecipeDelete('${mySimpleRecipe.recipeCode}')">레시피
+                              삭제</a>
+                        </form>
+                     </div>
+                  </div>
+                  <div class="view view-first">
+                     <img src="\Flook\userImage\65911d982e9e1f3193b3b91fa7fe846a1_m.jpg" />
+                     <div class="mask">
+                        <form method="post" action="detail" id="detail"
+                           style="display: inline">
+                           <a type="button"
+                              href="javascript:detailSee('0101UR1439023015454')">
+                              <h2>부추김치, 부추김치 맛있게 담그는법</h2>
+                           </a> </a>
+                        </form>
+                        <p>좋아요 : ${mySimpleRecipe.likeCount} 조회수
+                           :${mySimpleRecipe.postHits}</p>
+                        <a href="modifyRecipe.jsp" class="info">레시피수정</a>
+                        <form method="post" action="deleteMyRecipe" id="myRecipe"
+                           style="display: inline">
+                           <a type="button" id="recipeDeleteBtn" class="info"
+                              href="javascript:myRecipeDelete('${mySimpleRecipe.recipeCode}')">레시피
+                              삭제</a>
+                        </form>
+                     </div>
+                  </div>
+                  <div class="view view-first">
+                     <img src="\Flook\userImage\01c8561419fbfaf3ba13f9828929227d1_m.jpg" />
+                     <div class="mask">
+                        <form method="post" action="detail" id="detail"
+                           style="display: inline">
+                           <a type="button"
+                              href="javascript:detailSee('0101UR1439023229778')">
+                              <h2>백종원 비빔국수 만들기</h2>
+                           </a> </a>
+                        </form>
+                        <p>좋아요 : ${mySimpleRecipe.likeCount} 조회수
+                           :${mySimpleRecipe.postHits}</p>
+                        <a href="modifyRecipe.jsp" class="info">레시피수정</a>
+                        <form method="post" action="deleteMyRecipe" id="myRecipe"
+                           style="display: inline">
+                           <a type="button" id="recipeDeleteBtn" class="info"
+                              href="javascript:myRecipeDelete('${mySimpleRecipe.recipeCode}')">레시피
+                              삭제</a>
+                        </form>
+                     </div>
+                  </div>
+                  <div class="view view-first">
+                     <img src="\Flook\userImage\a11763e2dd47a1affacefc6bbf25d6711_m.jpg" />
+                     <div class="mask">
+                        <form method="post" action="detail" id="detail"
+                           style="display: inline">
+                           <a type="button"
+                              href="javascript:detailSee('0101UR1439023453636')">
+                              <h2>백종원 마파두부</h2>
+                           </a> </a>
+                        </form>
+                        <p>좋아요 : ${mySimpleRecipe.likeCount} 조회수
+                           :${mySimpleRecipe.postHits}</p>
+                        <a href="modifyRecipe.jsp" class="info">레시피수정</a>
+                        <form method="post" action="deleteMyRecipe" id="myRecipe"
+                           style="display: inline">
+                           <a type="button" id="recipeDeleteBtn" class="info"
+                              href="javascript:myRecipeDelete('${mySimpleRecipe.recipeCode}')">레시피
+                              삭제</a>
+                        </form>
+                     </div>
+                  </div>
+                  <div class="view view-first">
+                     <img src="\Flook\userImage\8b708c076736f62e149bad9d3949f30a1_m.jpg" />
+                     <div class="mask">
+                        <form method="post" action="detail" id="detail"
+                           style="display: inline">
+                           <a type="button"
+                              href="javascript:detailSee('0101UR1439024501630')">
+                              <h2>쫄깃한 가지구이무침</h2>
+                           </a> </a>
+                        </form>
+                        <p>좋아요 : ${mySimpleRecipe.likeCount} 조회수
+                           :${mySimpleRecipe.postHits}</p>
+                        <a href="modifyRecipe.jsp" class="info">레시피수정</a>
+                        <form method="post" action="deleteMyRecipe" id="myRecipe"
+                           style="display: inline">
+                           <a type="button" id="recipeDeleteBtn" class="info"
+                              href="javascript:myRecipeDelete('${mySimpleRecipe.recipeCode}')">레시피
+                              삭제</a>
+                        </form>
+                     </div>
+                  </div>
+                  <div class="view view-first">
+                     <img src="\Flook\userImage\944d3d95179a21ffce4fa2c70528afe01_m.jpg" />
+                     <div class="mask">
+                        <form method="post" action="detail" id="detail"
+                           style="display: inline">
+                           <a type="button"
+                              href="javascript:detailSee('0101UR1439024750919')">
+                              <h2>웰빙 곤드레나물밥</h2>
+                           </a> </a>
+                        </form>
+                        <p>좋아요 : ${mySimpleRecipe.likeCount} 조회수
+                           :${mySimpleRecipe.postHits}</p>
+                        <a href="modifyRecipe.jsp" class="info">레시피수정</a>
+                        <form method="post" action="deleteMyRecipe" id="myRecipe"
+                           style="display: inline">
+                           <a type="button" id="recipeDeleteBtn" class="info"
+                              href="javascript:myRecipeDelete('${mySimpleRecipe.recipeCode}')">레시피
+                              삭제</a>
+                        </form>
+                     </div>
+                  </div>
+                  <%-- <%
+                     }
+                  %> --%>
+                  

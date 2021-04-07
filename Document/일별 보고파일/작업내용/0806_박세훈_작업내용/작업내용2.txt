@@ -1,0 +1,72 @@
+insert into post_tb(post_code,recipe_code,user_code,like_count,post_hits,post_hash_tag,post_date)
+values('POST_001','RECIPE_001','USER_001',243,2524,'#김치#스팸#밥',sysdate);
+insert into post_tb(post_code,recipe_code,user_code,like_count,post_hits,post_hash_tag,post_date)
+values('POST_002','RECIPE_002','USER_001',534,4524,'#김치#부침#밀가루',sysdate);
+insert into post_tb(post_code,recipe_code,user_code,like_count,post_hits,post_hash_tag,post_date)
+values('POST_003','RECIPE_003','USER_001',134,2344,'#총각#김치#시원',sysdate);
+insert into post_tb(post_code,recipe_code,user_code,like_count,post_hits,post_hash_tag,post_date)
+values('POST_004','RECIPE_004','USER_001',122,2524,'#고기#갈비#만두',sysdate);
+insert into post_tb(post_code,recipe_code,user_code,like_count,post_hits,post_hash_tag,post_date)
+values('POST_005','RECIPE_005','USER_001',234,4234,'#치즈#라면#얼큰',sysdate);
+insert into post_tb(post_code,recipe_code,user_code,like_count,post_hits,post_hash_tag,post_date)
+values('POST_006','RECIPE_006','USER_001',345,4536,'#볶음#라면#얼큰',sysdate);
+insert into post_tb(post_code,recipe_code,user_code,like_count,post_hits,post_hash_tag,post_date)
+values('POST_007','RECIPE_007','USER_001',563,5686,'#해물#파전#밀가루',sysdate);
+insert into post_tb(post_code,recipe_code,user_code,like_count,post_hits,post_hash_tag,post_date)
+values('POST_008','RECIPE_008','USER_001',234,8756,'#고기#갈비#탕',sysdate);
+insert into post_tb(post_code,recipe_code,user_code,like_count,post_hits,post_hash_tag,post_date)
+values('POST_009','RECIPE_009','USER_001',192,3456,'#갈비#치즈#볶음밥',sysdate);
+insert into post_tb(post_code,recipe_code,user_code,like_count,post_hits,post_hash_tag,post_date)
+values('POST_010','RECIPE_010','USER_001',593,6543,'#치즈#마요네즈#덮밥',sysdate);
+
+CREATE OR REPLACE VIEW simple_recipe_view
+AS
+select r.recipe_code,p.post_code,r.complete_image,r.recipe_name,r.recipe_description,p.like_count,p.post_hits,cct.country_category_name,ict.ingredient_category_name,kct.kind_category_name,sct.situation_category_name,mct.method_category_name
+FROM recipe_tb r,post_tb p,recipe_category_tb rc,country_category_tb cct,ingredient_category_tb ict,kind_category_tb kct,situation_category_tb sct,method_category_tb mct
+WHERE p.recipe_code=r.recipe_code
+AND r.recipe_code=rc.recipe_code
+AND rc.country_category_code=cct.country_category_code
+AND rc.ingredient_category_code =ict.ingredient_category_code
+AND rc.kind_category_code=kct.kind_category_code
+AND rc.situation_category_code=sct.situation_category_code
+AND rc.method_category_code=mct.method_category_code;
+
+select *
+from recipe_tb;
+
+select *
+from recipe_category_tb;
+
+desc recipe_category_tb;
+
+select *
+from country_category_tb;
+
+select
+
+select *
+from simple_recipe_view;
+
+select * 
+from post_tb;
+
+insert into recipe_category_tb
+values('RCC001','RECIPE_001','CCT001','ICT001','KCT001','SCT002','MCT003');
+insert into recipe_category_tb
+values('RCC001','RECIPE_002','CCT003','ICT002','KCT004','SCT003','MCT002');
+insert into recipe_category_tb
+values('RCC001','RECIPE_003','CCT005','ICT006','KCT011','SCT001','MCT010');
+insert into recipe_category_tb
+values('RCC001','RECIPE_004','CCT002','ICT007','KCT006','SCT005','MCT004');
+insert into recipe_category_tb
+values('RCC001','RECIPE_005','CCT004','ICT009','KCT003','SCT010','MCT007');
+insert into recipe_category_tb
+values('RCC001','RECIPE_006','CCT001','ICT004','KCT010','SCT009','MCT008');
+insert into recipe_category_tb
+values('RCC001','RECIPE_007','CCT003','ICT002','KCT004','SCT002','MCT001');
+insert into recipe_category_tb
+values('RCC001','RECIPE_008','CCT001','ICT011','KCT009','SCT004','MCT002');
+insert into recipe_category_tb
+values('RCC001','RECIPE_009','CCT002','ICT010','KCT012','SCT006','MCT004');
+insert into recipe_category_tb
+values('RCC001','RECIPE_010','CCT005','ICT001','KCT007','SCT017','MCT007');

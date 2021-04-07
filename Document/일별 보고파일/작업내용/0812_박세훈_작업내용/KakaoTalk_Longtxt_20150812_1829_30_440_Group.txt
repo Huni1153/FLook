@@ -1,0 +1,127 @@
+                  <div class="view view-first"
+                     style="width: 300px; height: 240px; margin: 15px">
+                     <img
+                        src="\Flook\userImage\50ec71c5c9991fc74f440b2888aed08a1_m.jpg"
+                        style="width: 300px; height: 240px;" />
+                     <div class="mask">
+                        <form method="post" action="detail" id="detail"
+                           style="display: inline">
+                           <a type="button" style="text-decoration: none"
+                              href="javascript:detailSee('0101UR1439346004109')">
+                              <h2>소불고기 만드는 법</h2>
+                           </a>
+                        </form>
+                        <p>좋아요 : ${mySimpleRecipe.likeCount}43509 조회수
+                           :${mySimpleRecipe.postHits}923742</p>
+                        <form>
+                           <a type="button" id="insertRcipeBtn" class="info" style="text-decoration: none"
+                              href="javascript:insertScrap('0101UR1439346004109')">스크랩
+                              추가</a>
+                        </form>
+                     </div>
+                  </div>
+                  <div class="view view-first"
+                     style="width: 300px; height: 240px; margin: 15px">
+                     <img
+                        src="\Flook\userImage\ad939abab46c784767d2155abdc8b0e61_m.jpg" />
+                     <div class="mask">
+                        <form method="post" action="detail" id="detail"
+                           style="display: inline">
+                           <a type="button" style="text-decoration: none"
+                              href="javascript:detailSee('0101UR1439346254167')">
+                              <h2>불고기 토마토샐러드</h2>
+                           </a>
+                        </form>
+                        <p>좋아요 : ${mySimpleRecipe.likeCount}13747 조회수
+                           :${mySimpleRecipe.postHits}523452</p>
+                        <form>
+                           <a type="button" id="insertRcipeBtn" class="info" style="text-decoration: none"
+                              href="javascript:insertScrap('0101UR1439346254167')">스크랩
+                              추가</a>
+                        </form>
+                     </div>
+                  </div>
+                  <div class="view view-first"
+                     style="width: 300px; height: 240px; margin: 15px">
+                     <img
+                        src="\Flook\userImage\bac7b1fd3a74303b2539417a2b5722ab1_m.jpg" />
+                     <div class="mask">
+                        <form method="post" action="detail" id="detail"
+                           style="display: inline">
+                           <a type="button" style="text-decoration: none"
+                              href="javascript:detailSee('0101UR1439346525768')">
+                              <h2>맛있는 잡채만드는법</h2>
+                           </a>
+                        </form>
+                        <p>좋아요 : ${mySimpleRecipe.likeCount}32643 조회수
+                           :${mySimpleRecipe.postHits}96734</p>
+                        <form>
+                           <a type="button" id="insertRcipeBtn" class="info" style="text-decoration: none"
+                              href="javascript:insertScrap('0101UR1439346525768')">스크랩
+                              추가</a>
+                        </form>
+                     </div>
+                  </div>
+                  <div class="view view-first"
+                     style="width: 300px; height: 240px; margin: 15px">
+                     <img
+                        src="\Flook\userImage\f3ed1f9c9886f89ad788e04e1c0d25b91_m.jpg" />
+                     <div class="mask">
+                        <form method="post" action="detail" id="detail"
+                           style="display: inline">
+                           <a type="button" style="text-decoration: none"
+                              href="javascript:detailSee('0101UR1439346721367')">
+                              <h2>쇠고기 쌈장 만드는법</h2>
+                           </a>
+                        </form>
+                        <p>좋아요 : ${mySimpleRecipe.likeCount}22123 조회수
+                           :${mySimpleRecipe.postHits}132412</p>
+                        <form>
+                           <a type="button" id="insertRcipeBtn" class="info"
+                              href="javascript:insertScrap('0101UR1439346721367')">스크랩
+                              추가</a>
+                        </form>
+                     </div>
+                  </div>
+                  <div class="view view-first"
+                     style="width: 300px; height: 240px; margin: 15px">
+                     <img
+                        src="\Flook\userImage\c5fe0d25d7082950f2f695cdb9cfecb8_m.jpg" />
+                     <div class="mask">
+                        <form method="post" action="detail" id="detail"
+                           style="display: inline">
+                           <a type="button" style="text-decoration: none"
+                              href="javascript:detailSee('0101UR1439346999477')">
+                              <h2>사천만두 만들기</h2>
+                           </a> 
+                        </form>
+                        <p>좋아요 : ${mySimpleRecipe.likeCount}364 조회수
+                           :${mySimpleRecipe.postHits}1342</p>
+                        <form>
+                           <a type="button" id="insertRcipeBtn" class="info"
+                              href="javascript:insertScrap('0101UR1439346999477')">스크랩
+                              추가</a>
+                        </form>
+                     </div>
+                  </div>
+                  <div class="view view-first"
+                     style="width: 300px; height: 240px; margin: 15px">
+                     <img
+                        src="\Flook\userImage\ea3662d094aa3d1580e726cb0f32d0ea1_m.jpg" />
+                     <div class="mask">
+                        <form method="post" action="detail" id="detail"
+                           style="display: inline">
+                           <a type="button" style="text-decoration: none"
+                              href="javascript:detailSee('0101UR1439347289875')">
+                              <h2>콩국수 황금레시피</h2>
+                           </a>
+                        </form>
+                        <p>좋아요 : ${mySimpleRecipe.likeCount}2378 조회수
+                           :${mySimpleRecipe.postHits}1342689</p>
+                        <form>
+                           <a type="button" id="insertRcipeBtn" class="info"
+                              href="javascript:insertScrap('0101UR1439347289875')">스크랩
+                              추가</a>
+                        </form>
+                     </div>
+                  </div>

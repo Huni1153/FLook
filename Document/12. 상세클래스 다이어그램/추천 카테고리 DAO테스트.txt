@@ -1,0 +1,85 @@
+create table country_category_tb(
+country_category_code varchar2(100) primary key,
+country_category_name varchar2(100) not null
+);
+
+insert into country_category_tb values('code1','한국');
+insert into country_category_tb values('code2','미국');
+
+update country_category_tb set country_category_name='한국' where country_category_code='code2';
+
+delete country_category_tb where country_category_code='code1';
+
+select * from country_category_tb;
+
+
+==========================================================================================================================================
+
+
+create table ingredient_category_tb(
+ingredient_category_code varchar2(100) primary key,
+ingredient_category_name varchar2(100) not null
+);
+
+insert into ingredient_category_tb values('code1','양파');
+insert into ingredient_category_tb values('code2','감자');
+
+update ingredient_category_tb set ingredient_category_name='당근' where ingredient_category_code='code2';
+
+delete ingredient_category_tb where ingredient_category_code='code1';
+
+select * from ingredient_category_tb;
+
+
+==========================================================================================================================================
+
+
+create table kind_category_tb(
+kind_category_code varchar2(100) primary key,
+kind_category_name varchar2(100) not null
+);
+
+insert into kind_category_tb values('code1','끓이기');
+insert into kind_category_tb values('code2','데치기');
+
+update kind_category_tb set kind_category_name='굽기' where kind_category_code='code2';
+
+delete kind_category_tb where kind_category_code='code1';
+
+select * from kind_category_tb;
+
+
+==========================================================================================================================================
+
+
+create table situation_category_tb(
+situation_category_code varchar2(100) primary key,
+situation_category_name varchar2(100) not null
+);
+
+insert into situation_category_tb values('code1','기분좋은날');
+insert into situation_category_tb values('code2','비오는날');
+
+update situation_category_tb set situation_category_name='졸린날' where situation_category_code='code2';
+
+delete situation_category_tb where situation_category_code='code1';
+
+select * from situation_category_tb;
+
+
+==========================================================================================================================================
+
+
+create table method_category_tb(
+method_category_code varchar2(100) primary key,
+method_category_name varchar2(100) not null
+);
+
+insert into method_category_tb values('code1','밥');
+insert into method_category_tb values('code2','국');
+
+update method_category_tb set method_category_name='찌개' where method_category_code='code2';
+
+delete method_category_tb where method_category_code='code1';
+
+select * from method_category_tb;

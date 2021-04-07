@@ -1,0 +1,149 @@
+CREATE TABLE user_tb (
+user_code varchar2(100) not null constraints user_tb_user_code_pk primary key, 
+user_image varchar2(2000) null,
+user_name varchar2(20) not null, 
+user_email varchar2(320) unique, 
+user_password varchar2(60) not null, 
+user_gender varchar2(20) not null, 
+user_birthday date not null,
+user_sns number);
+
+create table country_category_tb(
+country_category_code varchar2(100) primary key,
+country_category_name varchar2(100) not null
+);
+
+create table kind_category_tb(
+kind_category_code varchar2(100) primary key,
+kind_category_name varchar2(100) not null
+);
+
+create table situation_category_tb(
+situation_category_code varchar2(100) primary key,
+situation_category_name varchar2(100) not null
+);
+
+create table method_category_tb(
+method_category_code varchar2(100) primary key,
+method_category_name varchar2(100) not null
+);
+create table ingredient_category_tb(
+ingredient_category_code  varchar2(100) NOT NULL CONSTRAINT ingredient_category_code_pk PRIMARY KEY,
+ingredient_category_name varchar2(100) not null);
+
+
+
+
+CREATE TABLE recipe_tb(
+recipe_code VARCHAR2(100) NOT NULL CONSTRAINT recipe_tb_recipe_code_pk PRIMARY KEY,
+complete_image VARCHAR2(2000) NOT NULL,
+recipe_name varchar2(100) not null,
+recipe_description VARCHAR2(2000) NULL,
+person_number NUMBER NOT NULL,
+cooking_time VARCHAR2(100) NOT NULL,
+cooking_level VARCHAR2(100) NOT NULL
+);
+create table recipe_category_tb(
+recipe_category_code varchar2(100) not null constraints rct_rcc_pk primary key,
+recipe_code varchar2(100) not null constraints pct_rc_fk references recipe_tb(recipe_code),
+country_category_code varchar2(100) not null constraints rct_ccc_fk references country_category_tb(country_category_code),
+ingredient_category_code varchar2(100) not null constraints rct_icc_fk references ingredient_category_tb(ingredient_category_code),
+kind_category_code varchar2(100) not null constraints rct_kcc_fk references kind_category_tb(kind_category_code),
+situation_category_code varchar2(100) not null constraints rct_scc_fk references situation_category_tb(situation_category_code),
+method_category_code varchar2(100) not null constraints rct_mcc_fk references method_category_tb(method_category_code)
+);
+
+
+CREATE TABLE ingredient_unit_category_tb(
+ingredient_unit_code VARCHAR2(100) NOT NULL CONSTRAINTS ingredient_unit_tb_pk PRIMARY KEY,
+ingredient_unit_name VARCHAR2(100) NULL
+);
+
+CREATE TABLE ingredient_tb(
+ingredient_code VARCHAR2(100) NOT NULL CONSTRAINTS ingredient_tb_code_pk PRIMARY KEY,
+recipe_code VARCHAR2(100) NOT NULL CONSTRAINT ingredient_tb_recipe_code_fk REFERENCES recipe_tb (recipe_code),
+ingredient_name VARCHAR2(100) NOT NULL,
+ingredient_amount NUMBER NULL,
+ingredient_type VARCHAR2(100) NOT NULL,
+ingredient_unit_code VARCHAR2(100) CONSTRAINT ingre_cate_tb_unit_code_fk REFERENCES ingredient_unit_category_tb (ingredient_unit_code)
+);
+
+create table post_tb (post_code varchar2(100) not null constraints post_tb_post_code_pk primary key,
+recipe_code varchar2(100) not null CONSTRAINTS post_tb_recipe_code_fk references recipe_tb(recipe_code),
+user_code varchar2(100) not null CONSTRAINTS post_tb_user_code_fk references user_tb(user_code),
+like_count NUMBER not null,
+post_hits number not null, 
+post_hash_tag varchar2(1000) null,
+post_date date not null
+);
+
+CREATE TABLE cooking_tb(
+cooking_code VARCHAR2(100) NOT NULL CONSTRAINTS cooking_tb_cooking_code_pk PRIMARY KEY,
+recipe_code VARCHAR2(100) NOT NULL CONSTRAINT cooking_tb_recipe_code_fk REFERENCES recipe_tb (recipe_code),
+cooking_sequence NUMBER NOT NULL,
+cooking_image VARCHAR2(2000) NOT NULL,
+cooking_caption VARCHAR2(2000)NULL);
+
+
+create table cart_tb (
+cart_code varchar2(100) not null constraints cart_tb_cart_code_pk primary key,
+user_code varchar2(100) not null constraints cart_tb_user_code_fk references user_tb(user_code),
+ingredient_code varchar2(100) not null constraints cart_tb_ingredient_code_fk  references ingredient_tb(ingredient_code)
+);
+
+create table comment_tb (
+comment_code varchar2(100) constraints comment_tb_comment_code_pk primary key,
+comment_user_code varchar2(1000) constraints comment_tb_user_code_fk references user_tb(user_code) not null,
+comment_contents varchar2(1000) not null,
+comment_date date not null,
+post_code varchar2(100) not null constraints comment_tb_post_code_fk references post_tb(post_code)
+);
+
+
+
+create table follow_tb(
+follow_code varchar2(100) not null constraints follow_tb_pk primary key,
+user_code varchar2(100)  constraints follow_tb_user_code_fk REFERENCES user_tb(user_code),
+follow_user_code varchar2(100) constraints follow_tb_user_code_fk2 REFERENCES user_tb(user_code)
+);
+
+create table niceness_tb(
+niceness_code varchar2(100) not null constraint niceness_info_tb_pk primary key,
+niceness_user_code VARCHAR2(100) CONSTRAINT nicess_user_code_fk references user_tb(user_code),
+post_code varchar2(100) references post_tb(post_code),
+niceness_date date not null
+);
+create table video_category_tb(
+video_category_code varchar2(100) not null constraint video_category_code_pk primary key,
+video_category_name varchar2(100) not null
+);
+
+CREATE TABLE video_recipe_tb(
+video_recipe_code VARCHAR2(100) NOT NULL CONSTRAINT video_recipe_video_code_pk PRIMARY KEY,
+video_name VARCHAR2(100) NULL,
+video_url VARCHAR2(100) NULL,
+recipe_code VARCHAR2(100) NOT NULL CONSTRAINT video_recipe_recipe_code_fk REFERENCES recipe_tb (recipe_code),
+video_category_code varchar2(100) not null constraint video_category_code_fk references video_category_tb(video_category_code)
+);
+
+
+
+
+create table SNS_friend_tb (sns_friend_code varchar2(100) not null constraints SNS_friend_tb_pk primary key,
+user_code varchar2(100)  constraints SNS_friend_tb_user_code_fk REFERENCES user_tb(user_code),
+friend_user_code varchar2(100) constraints SNS_friend_tb_user_code_fk2 REFERENCES user_tb(user_code));
+
+
+create table preference_tb(
+preference_code VARCHAR2(100) NOT NULL CONSTRAINT preference_tb_prefer_code_pk PRIMARY KEY,
+preference_score number not null, 
+user_code varchar2(100) not null CONSTRAINTS preference_tb_user_code_fk references user_tb(user_code),
+recipe_code varchar2(100) not null CONSTRAINTS preference_tb_recipe_code_fk references recipe_tb(recipe_code)
+);
+
+
+create table scrap_tb(
+scrap_code varchar2(100) not null constraints scrap_tb_scrap_code_pk primary key,
+user_code varchar2(100) not null constraints scrap_tb_user_code_fk references user_tb(user_code),
+post_code varchar2(100) not null constraints scrap_tb_post_code_fk references post_tb(post_code),
+scrap_date date not null);

@@ -1,0 +1,24 @@
+create or replace view comment_view
+AS
+SELECT c.comment_code,c.comment_user_code,u.user_name,u.user_image,c.comment_contents,c.comment_date,c.post_code,r.recipe_code
+from comment_tb c
+join user_tb u
+on c.comment_user_code=u.user_code
+join post_tb p
+on p.post_code = c.post_code
+join recipe_tb r
+on r.recipe_code=p.recipe_code;
+
+
+
+
+
+
+
+
+
+create or replace view scrap_view
+as 
+select s.scrap_code,p.post_code,r.recipe_code,u.user_code,u.user_name,r.complete_image,r.recipe_name,r.recipe_description,p.like_count,p.post_hits,s.scrap_date
+from user_tb u, post_tb p, recipe_tb r, scrap_tb s
+where p.post_code=s.post_code and s.user_code=u.user_code and p.recipe_code=r.recipe_code;

@@ -1,0 +1,4 @@
+<div class="input-wrapper">
+          <input id="input-query" name="query" type="search" autocomplete="off" class="ui-autocomplete-input">
+          <span id="search-icon"></span>
+</div>

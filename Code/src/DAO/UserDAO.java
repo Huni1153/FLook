@@ -1,0 +1,363 @@
+package DAO;
+
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.LinkedList;
+
+import Connection.DBConnection;
+import VO.UserVO;
+
+public class UserDAO {
+	private static UserDAO userDAO;
+	private ArrayList<UserVO> userVOList;
+	private DBConnection conn;
+	
+	static {
+		userDAO =new UserDAO();
+	}
+	private UserDAO() {
+		// TODO Auto-generated constructor stub
+		this(new ArrayList<UserVO>());
+	}
+	private UserDAO(ArrayList<UserVO> userVOList) {
+		this.userVOList = userVOList;
+		conn=DBConnection.getInstance();
+	}
+	public static UserDAO getInstance() {
+		
+		return userDAO;
+	}
+	
+	private UserDAO(ArrayList<UserVO> userVOList, DBConnection dbConnection) {
+		super();
+		this.userVOList = userVOList;
+		this.conn = dbConnection;
+	}
+
+	public ArrayList<UserVO> getUserVOList() {
+		return userVOList;
+	}
+
+	public void setUserVOList(ArrayList<UserVO> userVOList) {
+		this.userVOList = userVOList;
+	}
+	
+	public UserVO seachUser(String email, String password){
+		PreparedStatement pstmt=null;
+		UserVO userVO=null;
+		
+		String userCode=null;
+		String userName=null;
+		String userImage=null;
+		String userEmail=null;
+		String userPassword=null;
+		String userGender= null;
+		String userBirthday=null;
+		int userSns = 0;
+		
+		
+		
+		try
+		{
+			String sql="select user_name,user_image,user_email,user_gender,user_birthday,user_sns from user_tb "
+					+ "where user_email='?' AND user_password=?";
+					
+			pstmt=conn.getConn().prepareStatement(sql);
+			pstmt.setString(1,email);
+			pstmt.setString(2,password);
+
+			ResultSet rs=pstmt.executeQuery();
+			
+			while(rs.next())
+			{
+				userCode=rs.getString("user_code");
+				userName=rs.getString("user_name");
+				userImage=rs.getString("user_image");
+				userEmail=rs.getString("user_email");
+				userPassword=rs.getString("user_password");
+				userGender=rs.getString("user_gender");
+				userBirthday=rs.getString("user_birthday");
+				userSns = rs.getInt("user_Sns");
+			
+			}
+				
+				userVO=new UserVO(userCode,userName,userImage,userEmail,userPassword,userGender,userBirthday,userSns);
+				 
+				
+
+		}
+		
+		catch(SQLException se)
+		{
+				System.out.println(se.getMessage());
+			//se.stackTracePrint();
+		}
+		catch(Exception e)
+		{
+				System.out.println(e.getMessage());
+			//e.stackTracePrint();
+		}
+		finally
+		{
+			if(pstmt!=null)
+			{
+				try
+				{
+					pstmt.close();
+				}
+				catch(SQLException se)
+				{
+				System.out.println(se.getMessage());
+					//se.stackTracePrint();
+				}
+			}
+		}
+
+		if(userVO!=null){
+			return userVO;
+		}
+		else{
+			return null;
+		}
+		
+		
+	}
+	public int insertUser(UserVO userVO) {
+		return insertUser(userVO.getUserName(),userVO.getUserImage(),userVO.getUserEmail(),userVO.getUserPassword(),userVO.getUserGender(),userVO.getBirthday());
+	}
+	public int insertUser(String userName,String userImage, String userEmail,String userPassword,String userGender,String userBirthday )
+	{
+		/*INSERT INTO user_tb(user_code,user_name,user_image,user_email,user_password,user_gender,user_birthday)
+		VALUES('USER_150729_001','전상우','http://www.naver.com','swj1539@naver.com','1539','남성',to_date('1990/08/04','yyyy/mm/dd'))
+	*/
+		PreparedStatement pstmt=null;
+		int row=0;
+		
+		try
+		{
+			String sql="INSERT INTO user_tb(user_code,user_name,user_image,user_email,user_password,user_gender,user_birthday,user_Sns)"+
+					"VALUES(?,?,?,?,?,?,to_date(?,'yyyy/mm/dd'),?)";
+			pstmt=conn.getConn().prepareStatement(sql);
+			pstmt.setString(1,"USER_150729_"+new Date(30,30,30).toString());//코드생성필요
+			pstmt.setString(2,userName);
+			pstmt.setString(3,userImage);
+			pstmt.setString(4, userEmail);
+			pstmt.setString(5, userPassword);
+			pstmt.setString(6, userGender);
+			pstmt.setString(7, userBirthday);
+			pstmt.setInt(8, 0);
+
+			row=pstmt.executeUpdate();
+			if(row!=0)
+				conn.getConn().commit();
+			else
+				conn.getConn().rollback();
+			
+			
+		}
+		
+		catch(SQLException se)
+		{
+				System.out.println(se.getMessage());
+			//se.stackTracePrint();
+		}
+		catch(Exception e)
+		{
+				System.out.println(e.getMessage());
+			//e.stackTracePrint();
+		}
+		finally
+		{
+			if(pstmt!=null)
+			{
+				try
+				{
+					pstmt.close();
+				}
+				catch(SQLException se)
+				{
+					System.out.println(se.getMessage());
+					//se.stackTracePrint();
+				}
+			}
+		}
+
+		return (byte) row;
+	
+	}
+	
+	public int modifyPassword(String email, String password,String newPassword){
+
+		PreparedStatement pstmt=null;
+		int row=0;
+		
+		try
+		{
+			String sql="UPDATE user_tb"+
+					"SET user_password=?"+
+					"WHERE user_email=? AND user_password=?";
+			pstmt=conn.getConn().prepareStatement(sql);
+			pstmt.setString(1,newPassword);//코드생성필요
+			pstmt.setString(2,email);
+			pstmt.setString(3,password);
+
+			row=pstmt.executeUpdate();
+			if(row!=0)
+				conn.getConn().commit();
+			else
+				conn.getConn().rollback();
+			
+			
+		}
+		
+		catch(SQLException se)
+		{
+				System.out.println(se.getMessage());
+			//se.stackTracePrint();
+		}
+		catch(Exception e)
+		{
+				System.out.println(e.getMessage());
+			//e.stackTracePrint();
+		}
+		finally
+		{
+			if(pstmt!=null)
+			{
+				try
+				{
+					pstmt.close();
+				}
+				catch(SQLException se)
+				{
+					System.out.println(se.getMessage());
+					//se.stackTracePrint();
+				}
+			}
+		}
+
+		return (byte) row;
+	
+	}
+		
+	public int deleteUser(String email, String password)
+	{
+		int rowNum=0;
+		PreparedStatement pstmt = null;
+		try
+		{
+
+			String sql="DELETE from user_tb where user_email=? AND user_password=?";
+			pstmt=conn.getConn().prepareStatement(sql);
+			pstmt.setString(1,email);
+			pstmt.setString(2, password);
+	
+			rowNum=pstmt.executeUpdate();
+			if(rowNum!=0)
+				conn.getConn().commit();
+		}
+		catch (SQLException se)
+		{
+			System.out.println(se.getMessage());
+		}
+		catch(Exception ex)
+		{
+			System.out.println(ex.getMessage());
+		}
+		finally
+		{
+			try
+			{
+				if(pstmt != null) {
+					pstmt.close();
+					conn.disConnect();
+				}
+			}
+			catch (SQLException se)
+			{
+				System.out.println(se.getMessage());
+			}
+		}
+		return rowNum;
+	
+	
+	}
+	public UserVO login(String userEmail,String userPassword) {
+		PreparedStatement pstmt = null;
+		try {
+			String sql = "select * from user_tb where user_email=? and user_password=?";
+			pstmt = conn.getConn().prepareStatement(sql);
+			pstmt.setString(1, userEmail);
+			pstmt.setString(2,userPassword);
+			ResultSet res = pstmt.executeQuery();
+			while(res.next()) {
+				return new UserVO(res.getString("user_Code"), res.getString("user_Name"), res.getString("user_Image"), res.getString("user_Email"), res.getString("user_Password"), res.getString("user_Gender"), res.getString("user_birthday"), res.getInt("user_Sns"));
+			}
+		} catch(Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			try {
+				pstmt.close();
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		}
+		return null;
+		
+	}
+	public UserVO registerCheck(String userEmail) {
+		PreparedStatement pstmt = null;
+		try {
+			String sql = "select * from user_tb where user_email=?";
+			pstmt = conn.getConn().prepareStatement(sql);
+			pstmt.setString(1, userEmail);
+			ResultSet res = pstmt.executeQuery();
+			while(res.next()) {
+				return new UserVO(res.getString("user_Code"), res.getString("user_Name"), res.getString("user_Image"), res.getString("user_Email"), res.getString("user_Password"), res.getString("user_Gender"), res.getString("user_birthday"), res.getInt("user_Sns"));
+			}
+		} catch(Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			try {
+				pstmt.close();
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		}
+		return null;
+				
+	}
+	public LinkedList<UserVO> searchUserListByUserName(String keyword) {
+		PreparedStatement pstmt = null;
+		LinkedList<UserVO> userList = new LinkedList<UserVO>();
+		try {
+			String sql = "select * from user_tb where user_name like ?";
+			pstmt = conn.getConn().prepareStatement(sql);
+			pstmt.setString(1, "%"+keyword+"%");
+			ResultSet res = pstmt.executeQuery();
+			while(res.next()) {
+				userList.add(new UserVO(res.getString("user_Code"),res.getString("user_Name"), res.getString("user_Image"), res.getString("user_Email"), res.getString("user_Password"), res.getString("user_Gender"), res.getString("user_birthday"), res.getInt("user_Sns")));
+			}
+		} catch( Exception ex ) {
+			ex.printStackTrace();
+		} finally {
+			try {
+				pstmt.close();
+			} catch(Exception ex) {
+				ex.printStackTrace();
+			}
+		}
+		return userList;
+	}
+	public static void main(String args[]){
+		//System.out.println(new UserDAO().insertUser("김정윤", "www.naverImage.com", "kimkim@naver.com","1539", "남성", "1990/08/04"));
+		//System.out.println(new UserDAO().deleteUser("swj1539@naver.com", "1539"));
+		/*System.out.println(UserDAO.getInstance().login("1234@1234", "1234"));*/
+		System.out.println(UserDAO.getInstance().searchUserListByUserName("기호"));
+	}
+}
+	
+

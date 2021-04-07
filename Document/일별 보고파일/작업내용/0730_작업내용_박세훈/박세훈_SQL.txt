@@ -1,0 +1,139 @@
+----------post_tb Å×ÀÌºí »ý¼º--------------------------------------------------------------
+create table post_tb (post_code varchar2(100) not null constraints post_tb_post_code_pk primary key
+,recipe_code varchar2(100) not null ,constraints post_tb_recipe_code_fk foreign key (recipe_code) references recipe_tb(recipe_code)
+,user_code varchar2(100) not null,constraints post_tb_user_code_fk foreign key (user_code) references user_tb(user_code)
+,like_count NUMBER not null,post_hits number not null, post_hash_tag varchar2(1000) null,post_date date not null);
+-------------------------------------------------------------------------------
+
+
+---------video_recipe_tb Å×ÀÌºí »ý¼º------------------------------------------------------
+CREATE TABLE video_recipe_tb(
+video_recipe_code VARCHAR2(100) NOT NULL CONSTRAINT video_recipe_video_code_pk PRIMARY KEY,
+video_name VARCHAR2(100) NULL,
+video_url VARCHAR2(100) NULL,
+recipe_code VARCHAR2(100) NOT NULL CONSTRAINT video_recipe_recipe_code_fk REFERENCES recipe_tb (recipe_code));
+------------------------------------------------------------------------------
+
+
+
+----------Simple_recipe_view ºä »ý¼º-------------------------------------------------
+create or replace view simple_recipe_view
+as
+select r.recipe_code,p.post_code,r.complete_image,r.recipe_name,r.recipe_description,p.like_count,p.post_hits
+from recipe_tb r
+join post_tb p
+on r.recipe_code=p.recipe_code
+------------------------------------------------------------------------------
+
+
+--------Flook_recipe_view ºä »ý¼º-----------------------------------------------------
+create or replace view flook_recipe_view
+as
+select p.post_code,r.recipe_code,r.complete_image,r.recipe_description,r.person_number,r.cooking_time,r.cooking_level
+,r.recipe_name,p.like_count,p.post_hits,p.post_hash_tag
+,r.recipe_name,p.like_count,p.post_hits,p.post_hash_tag
+from recipe_tb r
+join post_tb p
+on r.recipe_code=p.recipe_code;
+------------------------------------------------------------------------------
+
+
+-------video_recipe_view ºä »ý¼º------------------------------------------------------
+create or replace view video_recipe_view
+as
+select p.post_code,r.recipe_code,v.video_recipe_code,v.video_name,r.complete_image,r.recipe_name,r.recipe_description
+,r.person_number,r.cooking_time,r.cooking_level,v.video_url,p.like_count,p.post_hits,p.post_hash_tag
+from post_tb p
+join recipe_tb r
+on p.recipe_code=r.recipe_code
+join video_recipe_tb v
+on r.recipe_code=v.recipe_code;
+------------------------------------------------------------------------------
+
+
+--------simple_video_recipe_view ºä »ý¼º----------------------------------------------
+create or replace view simple_video_recipe_view
+as
+select p.post_code,v.video_recipe_code,v.video_name,v.video_url,r.recipe_code,r.complete_image,r.recipe_name
+,r.recipe_description,p.like_count,p.post_hits
+from video_recipe_tb v
+join recipe_tb r
+on r.recipe_code=v.recipe_code
+join post_tb p
+on p.recipe_code=r.recipe_code;
+------------------------------------------------------------------------------
+
+
+========================================================================================================================´ÜÀ§Å×½ºÆ®===============================================================================================================================
+
+
+--------inset ¹®--------------------------------------------------------------
+insert into user_tb(user_code,user_name,user_image,user_email,user_password,user_gender,user_birthday)
+values('1','±Ç±âÈ£','https://d12hfz37g51hrt.cloudfront.net/user/1595457/thumb/4013b90ba44e55e5dbea7ad5c7337907c7a1d4dd.jpg','ewfesdg@naver.com','1234','³²ÀÚ',sysdate);
+
+insert into recipe_tb(recipe_code,complete_image,recipe_name,recipe_description,person_number,cooking_time,cooking_level)
+values('1','https://d12hfz37g51hrt.cloudfront.net/user/1595457/thumb/4013b90ba44e55e5dbea7ad5c7337907c7a1d4dd.jpg','±èÄ¡ ººÀ½¹ä È²±Ý ·¹½ÃÇÇ','±èºº Â¯¸ÀÀÖÀ½',1,'40ºÐ','½¬¿ò');
+
+insert into post_tb(post_code,recipe_code,user_code,like_count,post_hits,post_hash_tag,post_date)
+values('1','4','2',124214,1332524,'#±èÄ¡#½ºÆÔ#¹ä',sysdate);
+------------------------------------------------------------------------------
+
+
+
+---------delete ¹®------------------------------------------------------------
+
+delete from post_tb where post_code=1;
+
+delete from post_tb where recipe_code=1;
+
+delete from post_tb where user_code=1;
+
+------------------------------------------------------------------------------
+
+
+
+---------update ¹®------------------------------------------------------------
+
+update post_tb
+set like_count=20000
+where post_code=3;
+
+update post_tb
+set post_hits=250492
+where post_code=1;
+
+update post_tb
+set post_hash_tag='#±èÄ¡#¹ä#ººÀ½
+where post_code=2;
+
+------------------------------------------------------------------------------
+
+
+
+---------select ¹®------------------------------------------------------------
+select *
+from user_tb;
+
+select *
+from recipe_tb;
+
+select *
+from post_tb;
+
+select *
+from simple_recipe_view;
+
+select *
+from simple_recipe_view
+where recipe_name like '%Ä¡Å²%';
+
+select *
+from flook_recipe_view;
+
+select *
+from video_recipe_view;
+
+select *
+from simple_video_recipe_view;
+
+------------------------------------------------------------------------------
